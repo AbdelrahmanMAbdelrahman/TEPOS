@@ -1,0 +1,20 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ErrorDatabaseConnection</title>
+</head>
+<body>
+    <h2 style="margin-top: 15%; text-align: center;">
+        @HttpContext.GetGlobalResourceObject("Local",
+       "Please check your database connection")........ <br />
+        @Html.ActionLink("Click Here to Retry", "Login", "Security")
+    </h2>
+</body>
+</html>

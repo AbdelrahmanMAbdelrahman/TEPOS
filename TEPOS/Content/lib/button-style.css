@@ -1,0 +1,24 @@
+﻿.btn-shadow {
+    box-shadow: 0 0.125rem 0.625rem rgba(63,106,216,0.4), 0 0.0625rem 0.125rem rgba(63,106,216,0.5);
+}
+.btn-pill {
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+.btn-pill::after {
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+.btn-wide {
+    padding: .5rem 2rem;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.btn-datatable-padding {
+    padding: 1px 4px
+}

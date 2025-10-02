@@ -1,0 +1,252 @@
+﻿@import url('lib/button-style.css');
+@import url('lib/theme-override.css');
+@import url('lib/override-datatable.css');
+
+.side-img-child .slide-img-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    opacity: 0.8;
+    z-index: 10;
+}
+.side-img-light .side-img-content {
+    color: #fff;
+}
+
+.side-img-child .side-img-content {
+    position: relative;
+    z-index: 15;
+    text-align: center;
+    margin: 0 6rem;
+}
+.h-100 {
+    height: 100vh !important;
+}
+.w-100 {
+    width: 100vh !important;
+}
+
+.fs-11rem {
+    font-size: 1.1rem;
+}
+.mb-15rem {
+    margin-bottom: 1.5rem;
+}
+.w100 {
+    width: 100% !important;
+}
+.w-45 {
+    width: 45% !important;
+}
+.w-55 {
+    width: 55% !important;
+}
+.w1000p {
+    width: 1000px;
+}
+.w850p {
+    width: 850px;
+}
+.w500p {
+    width: 500px;
+}
+
+.mt-7 {
+    margin-top: 7px; 
+}
+.mt-50{
+    margin-top: 50px;;
+}
+
+.bg-premium-dark {
+    background-image: linear-gradient(to right, #434343 0%, black 100%) !important;
+}
+
+.p-0 {
+ padding: 0px;   
+}
+
+input[type="checkbox"] {
+    width: 15px;height: 15px;
+}
+input[type="radio"] {
+    width: 15px;height: 15px;
+}
+
+.control-group.error input, .control-group.error select, .control-group.error textarea {
+    color: #b94a48;
+    border-color: #b94a48;
+}
+.control-group.error > label, .control-group.error .help-block, .control-group.error .help-inline {
+    color: #b94a48 !important;
+}
+.help-block > ul > li {
+     list-style-type: none;
+         color: #b94a48;
+}
+.help-block > ul {
+    padding-left: 1px;
+     margin-bottom: 0px;
+}
+
+.treeview ul {
+    background: none !important;
+}
+
+.dN {
+    display:none !important;
+}
+.txtbox {
+    float: left;
+    width: 95% !important;
+
+}
+.txtbox97 {
+    float: left;
+    width: 97% !important;
+
+}.clon {
+     font-weight: bold;
+     font-size: 14px;
+     float: right;
+ }
+.required {
+    color: red;
+    font-weight: bold;
+}
+
+.input-sm {
+    height: 28px !important;
+    border-radius: 2px !important;
+    color: #000;
+}
+
+.input-sm32 {
+    height: 32px !important;
+    border-radius: 2px !important;
+    color: #000;
+}
+.clsValidate {
+    font-size: 12px;
+    color: red;
+}
+.btn-fixedWidth {
+    min-width: 65px;
+}
+
+.chosen-container-single .chosen-single {
+    height: 28px !important;
+    border: 1px solid #c9c9c9 !important;
+    border-radius: 2px !important;
+    line-height: 24px !important;
+    text-align: left;
+}
+.chosen-drop {
+    text-align: left;
+}
+
+.chosen-container-single .chosen-single div b {
+    background: url(/Scripts/lib/SelectChosen/css/chosen-sprite.png) no-repeat 3px 3px !important;
+}
+.lblCustom {
+    font-size: 12px !important;
+}
+
+.plusIcon {
+    background-color: transparent;
+    text-decoration: none;
+    color: #3c8dbc;
+    cursor: pointer;
+    font-size: 1.0em;
+}
+.cusrorP {
+    cursor: pointer;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    opacity: 1.6!important;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background: #fafafa!important;
+    border-color: #d4d9df!important;
+ }
+.font-size-15px {
+    font-size: 15px !important;
+
+}
+.font-size-14px {
+    font-size: 14px !important;
+
+}
+.font-size-13px {
+    font-size: 13px !important;
+
+}
+.font-size-12px {
+    font-size: 12px !important;
+
+}
+.font-size-16px {
+    font-size: 16px !important;
+
+}
+.font-size-10px {
+    font-size: 10px !important;
+
+}
+.font-size-11px {
+    font-size: 11px !important;
+
+}
+.font-size-17px {
+    font-size: 17px !important;
+}
+.font-size-20px {
+    font-size: 20px !important;
+}
+.font-size-25px {
+    font-size: 25px !important;
+}
+
+.margin-top-5px {
+    margin-top: 5px;
+}
+.margin-left-5px {
+    margin-left: 5px;
+}
+.margin-top-6px {
+    margin-top: 6px;
+}
+.margin-left-6px {
+    margin-left: 6px;
+}
+.btn-sm-25px {
+    height: 25px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+}
+.margin-top-15px {
+    margin-top: 15px;
+}
+.margin-top-50px {
+    margin-top: 50px;
+}
+.margin-top-16px {
+    margin-top: 16px;
+}
+.padding-left-5px {
+    padding-left: 5px !important;
+
+}
+.padding-right-5px {
+    padding-right: 5px !important;
+}
+
+.p-5px {
+    padding: 5px !important;
+}
+ 

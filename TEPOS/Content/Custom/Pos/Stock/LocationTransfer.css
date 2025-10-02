@@ -1,0 +1,38 @@
+﻿.form-group {
+    padding: 4px !important;
+}
+.input-sm {
+    height: 25px !important;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+#divSearchOnChild {
+    float: left;
+    border: 2px solid #dcdad7;
+    position: absolute;
+    z-index: 100;
+    background: #efecea;
+    padding: 5px;
+    border-radius: 2px;
+    padding-bottom: 0px;
+}
+#divCloseSearch {
+    float: left;
+    position: absolute;
+    z-index: 2000;
+    right: 4px;
+    top: -2px;
+    font-size: 20px;
+    color: red;
+    cursor: pointer;
+}
+#divSearchOn {
+    display: none; position: relative;
+}
+#txtItemOrBarcodeAC {
+    float: left;
+    display: initial;
+    left: -1px;
+    top: 30px;
+}

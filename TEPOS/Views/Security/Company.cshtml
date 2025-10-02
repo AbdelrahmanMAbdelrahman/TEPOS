@@ -1,0 +1,139 @@
+﻿@model ERP.Models.Security.CmnCompany
+@{
+    ViewBag.Title = "Company";
+}
+<link href="~/Content/Custom/Security/Company.css" rel="stylesheet" />
+<script src="~/Scripts/Custom/Security/Company.js"></script>
+<div class="page-inner margin-top-15px">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "frmCPost", @class = "form-horizontal", enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <div class="col-md-8 col-md-offset-1 ">
+
+                <div class="form-group form-inline control-group">
+                    <label class="col-md-3">
+                        @HttpContext.GetGlobalResourceObject("Local", "Name")
+                    </label>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control txtbox97" })
+                        <span class="required">*</span><span class="clsValidate">@Html.ValidationMessageFor(m => m.Name)</span>
+                    </div>
+                </div>
+                <div class="form-group form-inline control-group">
+                    <label class="col-md-3">@HttpContext.GetGlobalResourceObject("Local", "Name In Arabic")</label>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.NameAddiLang, new { @class = "form-control txtbox97" })
+                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.Name)</span>
+                    </div>
+                </div>
+
+                <div class="form-group form-inline control-group">
+                    <label class="col-md-3">@HttpContext.GetGlobalResourceObject("Local", "Address")</label>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control txtbox97" })
+                        <span class="required">*</span><span class="clsValidate">@Html.ValidationMessageFor(m => m.Address)</span>
+                    </div>
+                </div>
+                <div class="form-group form-inline control-group">
+                    <label class="col-md-3">@HttpContext.GetGlobalResourceObject("Local", "Address In Arabic")</label>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.AddressAddiLang, new { @class = "form-control txtbox97" })
+                        <span class="clsValidate">
+                         @Html.ValidationMessageFor(m => m.AddressAddiLang))</span>
+                    </div>
+                </div>
+                <div class="form-group form-inline control-group">
+                    <label class="col-md-3">@HttpContext.GetGlobalResourceObject("Local", "Address Head Office")</label>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.AddressHeadOffice, new { @class = "form-control txtbox97" })
+                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.AddressHeadOffice)</span>
+                    </div>
+                </div>
+                <div class="form-group form-inline control-group">
+                    <label class="col-md-3">@HttpContext.GetGlobalResourceObject("Local", "Address Head Office(Arabic)")</label>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.AddressHeadOfficeAddiLang, new { @class = "form-control txtbox97" })
+                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.AddressHeadOfficeAddiLang)</span>
+                    </div>
+                </div>
+                <div class="form-group form-inline control-group">
+                    <label class="col-md-3">@HttpContext.GetGlobalResourceObject("Local", "Email")</label>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control txtbox97" })
+                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.Email)</span>
+                    </div>
+                </div>
+                <div class="form-group form-inline control-group">
+                    <label class="col-md-3">@HttpContext.GetGlobalResourceObject("Local", "Registration No")</label>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.RegistrationNo, new { @class = "form-control txtbox97" })
+                        <span class="required">*</span><span class="clsValidate">@Html.ValidationMessageFor(m => m.RegistrationNo)</span>
+                    </div>
+                </div>
+                <div class="form-group form-inline control-group">
+                    <label class="col-md-3">
+                        @HttpContext.GetGlobalResourceObject("Local", "Web Address")
+                    </label>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.WebAddress, new { @class = "form-control txtbox97" })
+                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.WebAddress)</span>
+                    </div>
+                </div>
+                <div class="form-group form-inline control-group">
+                    <label class="col-md-3">
+                        @HttpContext.GetGlobalResourceObject("Local", "Others")
+                    </label>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.Others, new { @class = "form-control txtbox97" })
+                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.Others)</span>
+                    </div>
+                </div>
+                <div class="form-group form-inline control-group">
+                    <label class="col-md-3">@HttpContext.GetGlobalResourceObject("Local", "Phone")</label>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control txtbox97" })
+                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.Phone)</span>
+                    </div>
+                </div>
+                <div class="form-group form-inline control-group">
+                    <label class="col-md-3">@HttpContext.GetGlobalResourceObject("Local", "VatRegNo")</label>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.VatRegNo, new { @class = "form-control txtbox97" })
+                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.VatRegNo)</span>
+                    </div>
+                </div>
+
+                <div class="form-group form-inline control-group">
+                    <label class="col-md-3">
+                        @HttpContext.GetGlobalResourceObject("Local", "Vat / Tax")
+                    </label>
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(m => m.SalesPriceIncOrExcVat, new List<SelectListItem>
+                    {
+                        new SelectListItem {Text = "ALL VAT/TAX EXCLUDED", Value = "2"},
+                        new SelectListItem {Text = "ALL VAT/TAX INCLUDED", Value = "1"}
+
+                    }, new { @class = "form-control txtbox97" })
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                <div class="form-group form-inline control-group">
+                    <img class="logoStyle" src="@Html.DisplayFor(m => m.Logo)" />
+                </div>
+                <div class="form-group form-inline control-group">
+                    @Html.TextBoxFor(m => m.LogoFile, new { @class = "form-control txtbox97", @type = "file" })
+                </div>
+                <div class="form-group form-inline control-group">
+                    <input type="button" id="btnSave" value=@HttpContext.GetGlobalResourceObject("Local","Save Changes") class="btn btn-success btn-block" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+
+

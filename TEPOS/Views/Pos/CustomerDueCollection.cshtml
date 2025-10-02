@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Due Collection";
+}
+
+<script src="~/Scripts/Custom/Pos/Pos/CustomerDueCollection.js"></script>
+
+<div class="page-inner w100">
+    <div class="row">
+        <div class="col-md-12 text-right text-center">
+            <div class="main-card card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">@HttpContext.GetGlobalResourceObject("Local", "DueCollection") </h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-12 form-horizontal">
+                        <div class="row">
+                            <div class="col-md-5">
+                                @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "frmDueCollection" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true)
+
+                                    <div class="form-group form-inline control-group">
+                                        <label class="col-md-4 itemLbl">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Customer") <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-8">
+                                            @Html.DropDownList("Customer", new List<SelectListItem>(),
+                                           new { @class = "form-control txtbox97 input-sm chosen-box" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-inline control-group">
+                                        <label class="col-md-4 itemLbl">@HttpContext.GetGlobalResourceObject("Local", "Invoice No")</label>
+                                        <div class="col-md-8">
+                                            @Html.DropDownList("SalesInvoice", new List<SelectListItem>(),
+                                           new { @class = "form-control txtbox97 input-sm chosen-box" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-inline control-group">
+                                        <div class="offset-4 col-md-8">
+                                            <div class="txtbox97">
+                                                <input type="button" id="btnLoad"
+                                                       class="btn btn-info btn-sm btn-fixedWidth pull-right" 
+                                                       value=@HttpContext.GetGlobalResourceObject("Local", "Load") />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+
+                            <div class="col-md-7">
+                                <div class="col">
+                                    <table id="tableElement" class="inlineEditingDataTable table table-bordered w100"></table>
+                                </div>
+                                <div class="col mt-7">
+                                    <hr />
+                                    <button style="display: none" id="btnSave" class="btn btn-success btn-sm btn-sm pull-right">
+                                   @HttpContext.GetGlobalResourceObject("Local", "Save Collection")
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

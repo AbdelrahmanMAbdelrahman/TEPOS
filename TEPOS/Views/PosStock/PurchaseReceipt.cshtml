@@ -1,0 +1,352 @@
+﻿@using ERP.CSharpLib
+@model ERP.Models.POS.PosVwPurchaseReceipt
+@{
+    ViewBag.Title = "Purchase Receipt";
+}
+
+<link href="~/Content/Custom/Pos/Stock/PurchaseReceipt.css" rel="stylesheet" />
+<link href="~/Content/lib/search-table-utility.css" rel="stylesheet" />
+<script src="~/Scripts/Custom/Pos/Stock/PurchaseReceipt.js?@ProjectVersion.Version"></script>
+
+<div class="page-inner margin-top-15px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card card">
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title mb-0">@HttpContext.GetGlobalResourceObject("Local", "Purchase Receipt") </h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="col form-horizontal">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-horizontal">
+
+                                    <div class="form-group form-inline control-group">
+                                        <label class="col-md-5 lblCustom">
+                                            @HttpContext.GetGlobalResourceObject("Local", "CompanyInvNo")<span class="required"> *</span>
+                                        </label>
+                                        <div class="col-md-7">
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.InvReferenceNo,
+                                               new
+                                                    {
+                                                        @class = "form-control input-sm",
+                                                        placeholder =
+                                              @HttpContext.GetGlobalResourceObject("Local", "CompanyInvNo")
+                                                    })
+                                                <span class="input-group-btn">
+                                                    <input id="btnSearchInvoice" type="button"
+                                                           value=@HttpContext.GetGlobalResourceObject("Local","Find Invoice")
+                                                           class="btn btn-info btn-sm pull-right">
+                                                </span>
+                                            </div>
+                                            <span class="clsValidate">@Html.ValidationMessageFor(m => m.InvReferenceNo) </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-inline control-group">
+                                        <label class="col-md-5 lblCustom">
+                                            @HttpContext.GetGlobalResourceObject("Local", "InvReferenceNo")
+                                            <span class="required text-danger"> *</span>
+                                        </label>
+                                        <div class="col-md-7">
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.CompanyInvNo,
+                                               new
+                                                    {
+                                                        @class = "form-control input-sm ",
+                                                        placeholder =
+                                               @HttpContext.GetGlobalResourceObject("Local", "InvReferenceNo"),
+                                                   @Value = @TempData["invoiceNumber"]
+                                                    })
+                                                <span class="input-group-btn">
+                                                    <input id="btnFind" type="button" value=@HttpContext.GetGlobalResourceObject("Local","Find Invoice")
+                                                           class="btn btn-info btn-sm ">
+                                                </span>
+                                            </div>
+                                            <span class="clsValidate">@Html.ValidationMessageFor(m => m.CompanyInvNo) </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-inline control-group ">
+                                        <div class="col-md-7 offset-md-5">
+                                            <input type="checkbox" checked="checked" id="chkSearchEnable" /> <span>
+                                                @HttpContext.GetGlobalResourceObject("Local", "Enable search")
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-horizontal">
+
+                                    <div class="form-group form-inline control-group">
+                                        <label class="col-md-5 lblCustom">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Supplier") <span class="required text-danger"> *</span>
+                                        </label>
+                                        <div class="col-md-7">
+                                            @Html.DropDownListFor(m => m.PosSupplierId, new List<SelectListItem>(),
+                                           new { @class = "form-control input-sm input-full" })
+                                            <span class="clsValidate">@Html.ValidationMessageFor(m => m.PosSupplierId) </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-inline control-group">
+                                        <label class="col-md-5 lblCustom">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Branch") <span class="required text-danger"> *</span>
+                                        </label>
+                                        <div class="col-md-7">
+                                            @Html.DropDownListFor(m => m.PosBranchId, new List<SelectListItem>(),
+                                           new { @class = "form-control input-sm input-full" })
+                                            <span class="clsValidate">@Html.ValidationMessageFor(m => m.PosBranchId) </span>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-horizontal">
+                                    <div class="form-group form-inline control-group">
+                                        <label class="col-md-5 lblCustom">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Inv Date") <span class="required"> *</span>
+                                        </label>
+                                        <div class="col-md-7">
+                                            @Html.TextBoxFor(m => m.InvDate, new
+                                            {
+                                                @class = "form-control input-sm datePicker input-full",
+                                           @placeholder = HttpContext.GetGlobalResourceObject("Local", "Invoice Date"),
+                                           @Value = @UTCDateTime.BDDate().ToString("MM/dd/yyyy")
+                                            })
+                                            <span class="clsValidate">@Html.ValidationMessageFor(m => m.InvDate) </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-inline control-group">
+                                        <label class="col-md-5 lblCustom">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Inv. Receive Date")<span class="required"> *</span>
+                                        </label>
+                                        <div class="col-md-7">
+                                            @Html.TextBoxFor(m => m.InvReceiveDate, new
+                                            {
+                                                @class = "form-control input-sm datePicker input-full",
+                                           @placeholder =
+
+                                            HttpContext.GetGlobalResourceObject("Local", "Invoice Rec. Date"),
+                                           @Value = @UTCDateTime.BDDate().ToString("MM/dd/yyyy")
+                                            })
+                                            <span class="clsValidate">@Html.ValidationMessageFor(m => m.InvReceiveDate) </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-inline control-group">
+                                        <label class="col-md-5 lblCustom">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Paid Amount")@*<span class="required"> *</span>*@
+                                        </label>
+                                        <div class="col-md-7">
+                                            <input type="number" class="form-control input-sm text-right input-full" placeholder=@HttpContext.GetGlobalResourceObject("Local","Paid Amount") id="NetPayable" />
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="divSearchOn" class="row">
+                            <div id="divSearchOnChild">
+                                <div id="divCloseSearch">
+                                    <i class="fas fa-window-close"></i>
+                                </div>
+                                <div class="w50 float-left">
+                                    <span>
+                                        <input id="txtCodeOrBarcode" type="text" class="form-control input-sm txtItemOrBarcodeACI" placeholder=@HttpContext.GetGlobalResourceObject("Local",
+                                         "Enter item name or scan barcode") ........... />
+                                    </span>
+                                </div>
+                                <div class="" id="txtItemOrBarcodeAC"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                @* purchase receipt *@
+                                <table id="dTablePurchaseReceipt" class="inlineEditingDataTable table table-bordered w1000p"></table>
+                                @* end purchase receipt *@
+
+                            </div>
+                        </div>
+
+
+                        <div class="row mt-2">
+
+                            <div class="col-md-4">
+                                <div class="form-group form-inline control-group">
+                                    <div class="col p-0">
+                                        <label class=" lblCustom">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Remarks")
+                                        </label>
+                                        <textarea class="form-control input-full" rows="3" id="Inv_Remarks" placeholder=@HttpContext.GetGlobalResourceObject("Local","Remarks") ..></textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+                                <div class="row margin-top-15px">
+
+                                    <div class="col-md-6 p-0">
+                                        <div class="form-horizontal">
+
+                                            <div class="form-group form-inline control-group">
+                                                <label class="col-md-5 lblCustom">
+                                                    @HttpContext.GetGlobalResourceObject("Local", "Total Discount Less")
+                                                </label>
+                                                <div class="col-md-7">
+                                                    <input type="number" class="form-control input-sm dtInputBackground text-right input-full"
+                                                           id="Inv_LessDiscount" readonly="readonly"
+                                                           placeholder=@HttpContext.GetGlobalResourceObject("Local","Total Discount Less") />
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group form-inline control-group">
+                                                <label class="col-md-5 lblCustom">
+                                                    @HttpContext.GetGlobalResourceObject("Local",
+                                                   "Other Discount")
+                                                </label>
+                                                <div class="col-md-7">
+                                                    <input type="number" class="form-control input-sm text-right input-full"
+                                                           id="Inv_OtherDiscount" placeholder=@HttpContext.GetGlobalResourceObject("Local", "Other Discount") />
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group form-inline control-group">
+                                                <label class="col-md-5 lblCustom">
+                                                    @HttpContext.GetGlobalResourceObject("Local", "Purchases Tax")
+                                                </label>
+                                                <div class="col-md-7">
+                                                    <input type="number" class="form-control input-sm dtInputBackground text-right input-full"
+                                                           id="Inv_PurchaseTax" readonly="readonly" placeholder=@HttpContext.GetGlobalResourceObject("Local","Purchases Tax") />
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 p-0">
+                                        <div class="form-horizontal">
+
+                                            <div class="form-group form-inline control-group">
+                                                <label class="col-md-5 lblCustom">
+                                                    @HttpContext.GetGlobalResourceObject("Local", "Total Amount")
+                                                </label>
+                                                <div class="col-md-7">
+                                                    <input type="number" class="form-control input-sm dtInputBackground text-right input-full"
+                                                           id="Inv_TotalAmount" readonly="readonly" placeholder=@HttpContext.GetGlobalResourceObject("Local","Total Amount") />
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group form-inline control-group">
+                                                <label class="col-md-5 lblCustom">
+                                                    @HttpContext.GetGlobalResourceObject("Local",
+                                                  "Other Charges")
+                                                </label>
+                                                <div class="col-md-7">
+                                                    <input type="number" class="form-control input-sm text-right input-full"
+                                                           id="Inv_OtherCharges" placeholder=@HttpContext.GetGlobalResourceObject("Local","Other Charges") />
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group form-inline control-group">
+                                                <label class="col-md-5 lblCustom">
+                                                    @HttpContext.GetGlobalResourceObject("Local", "Net Value")
+                                                </label>
+                                                <div class="col-md-7">
+                                                    <input type="number" class="form-control dtInputBackground input-sm text-right input-full"
+                                                           id="Inv_NetValue" readonly="readonly" placeholder=@HttpContext.GetGlobalResourceObject( "Local","Net Value") />
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-md-12 mt-3">
+                            <div class="p-4 rounded border bg-light shadow-sm">
+                                <!-- Search and Action Section -->
+                                <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 mb-3">
+                                    @*<div class="d-flex align-items-center gap-2">
+                                            <input type="text" class="form-control " placeholder="Enter Invoice Number" id="invoiceNumber" style="max-width: 300px;">
+                                            <button class="btn btn-primary d-flex align-items-center gap-2" id="btnSearchInvoice">
+                                                <i class="fas fa-search"></i> Search
+                                            </button>
+                                        </div>*@
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button id="btnHoldInvoice" class="btn btn-warning ">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Hold Invoice")
+                                        </button>
+                                        <select id="holdInvDropdown" class="form-select  custom-dropdown" style="width: auto; max-width: 200px;">
+                                            <option selected disabled>
+                                                @HttpContext.GetGlobalResourceObject("Local", "Hold Invoice")
+                                            </option>
+
+                                        </select>
+                                        <button id="btnRecallInvoice" class="btn btn-primary ">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Recall Invoice")
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Buttons Section -->
+                                <div class="d-grid gap-2">
+                                    <button id="btnSave" class="btn btn-outline-success btn-md">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Save Invoice")
+                                    </button>
+                                    <button id="btnRefresh" class="btn btn-outline-primary btn-md">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Refresh")
+                                    </button>
+                                    <button id="btnCancel" class="btn btn-outline-info btn-md">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Cancel")
+                                    </button>
+                                    <button id="btnCancelInvoice" class="btn btn-outline-warning btn-md">
+                                        <i class="fas fa-ban"></i>
+                                        @HttpContext.GetGlobalResourceObject("Local", "Cancel Invoice")
+                                    </button>
+                                    <button id="deleteSelected" class="btn btn-outline-danger btn-md">
+                                        <i class="fas fa-trash-alt"></i>
+                                        @HttpContext.GetGlobalResourceObject("Local", "Delete Selected")
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+

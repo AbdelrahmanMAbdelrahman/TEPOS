@@ -1,0 +1,86 @@
+﻿.dataTable {
+    border: none;
+    border-bottom: 1px solid #dbdbdb;
+    border-top: 3px solid #009ee4;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}   
+ .dataTables_scrollBody {
+    background:none !important;
+}
+.dataTable > thead > tr > th {
+    border-left: 1px solid #dbdbdb !important;
+    border-right: 1px solid #dbdbdb !important;
+}
+
+.custom-select {
+    background: none;
+    -webkit-appearance: auto;
+    -moz-appearance: auto;
+    appearance: auto;
+}
+
+.dataTable td, .dataTable th {
+    font-size: 12px;
+    border-top-width: 1px;
+    border-bottom: 1px solid;
+    border-color: #dbdbdb !important;
+    padding: 0 10px !important;
+    height: 31px;
+    vertical-align: middle !important;
+}
+
+table.DTFC_Cloned tr {
+    background: none !important;
+    margin-bottom: 0;
+}
+
+.inlineEditingDataTable > tbody > tr > td {
+    padding: 0 !important;
+    height: 10px !important;
+}
+.inlineEditingDataTable > tbody > tr > td > input {
+    height: 23px !important;
+    padding: 2px !important;
+    border: none !important;
+}
+.inlineEditingDataTable > tbody > tr > td > select {
+    height: 23px !important;
+    padding: 2px !important;
+    border: none !important;
+}
+.inlineEditingDataTable > tbody > tr > td > input:hover {
+    border: 1px solid #00ced1 !important;
+}
+.inlineEditingDataTable > tbody > tr > td > select:hover {
+    border: 1px solid #00ced1 !important;
+}
+
+.inlineEditingDataTable > tbody > tr > td > input:focus {
+    border: 2px solid red !important;
+}
+.inlineEditingDataTable > tbody > tr > td > select:focus {
+    border: 2px solid red !important;
+}
+.dataTableSerialNumberDiv {
+    width: 100%;
+    text-align: center;
+    background: linear-gradient(to top, #efeeee, #fffefe);
+    height: 24px;
+    padding-top: 3px;
+}
+
+.dtInputTextAlign {
+    text-align: right !important; 
+}
+.dtInputBackground {
+    background: #fff !important;
+}
+.readOnlyInputBackground {
+    background:#e9fffd !important;
+}
+.selected {
+    background: linear-gradient(to top, #a2a5a7, #aba9a9);
+    color: #fff;
+    font-weight: bold;
+}

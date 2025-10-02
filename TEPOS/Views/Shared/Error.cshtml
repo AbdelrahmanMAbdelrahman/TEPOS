@@ -1,0 +1,9 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+@using Resources
+@{
+    ViewBag.Title = "Error";
+}
+
+<h1 class="text-danger">@HttpContext.GetGlobalResourceObject("Local", "Error").</h1>
+<h2 class="text-danger">@HttpContext.GetGlobalResourceObject("Local", "An error occurred while processing your Request").</h2>
+

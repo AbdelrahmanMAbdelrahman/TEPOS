@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Billing Report Text";
+}
+@model ERP.Models.POS.PosBillingReportText
+<script src="~/Scripts/Custom/Pos/Settings/BillingReportText.js"></script>
+
+<div class="page-inner margin-top-15px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">
+                            @HttpContext.GetGlobalResourceObject("Local", "Billing Report Text")
+                        </h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-5">
+                            @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "BillingReportForm", @class = "form-horizontal" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true)
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-4 itemLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Branch")
+                                    </label>
+                                    <div class="col-md-8">
+                                        @Html.DropDownListFor(m => m.PosBranchId, new List<SelectListItem>(),
+                                       new { @class = "form-control txtbox97" })
+                                        <span class="required">*</span>
+                                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.PosBranchId) </span>
+                                    </div>
+                                </div>
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-4 itemLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Report Text")
+                                    </label>
+                                    <div class="col-md-8">
+                                        @Html.TextAreaFor(m => m.Text, new
+                                        {
+                                            @class = "form-control txtbox97",
+                                            @placeholder =
+                                      HttpContext.GetGlobalResourceObject("Local", "Description")
+                                        })
+                                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.Text) </span>
+                                    </div>
+                                </div>
+                            }
+                            <div class="form-group form-inline control-group">
+                                <div class="col-md-10 offset-2">
+                                    <div class="pull-right">
+                                        <input type="button" id="btnSave" class="btn btn-success btn-sm btn-sm" value=@HttpContext.GetGlobalResourceObject("Local", "Save Change") />
+                                        <input type="button" id="btnEdit" class="btn btn-warning btn-sm btn-sm" value=@HttpContext.GetGlobalResourceObject("Local", "Update") />
+                                        <input type="button" id="btnClear" class="btn btn-primary btn-sm btn-sm" value=@HttpContext.GetGlobalResourceObject("Local", "Clear") />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-7">
+                            <div class="col">
+                                <table id="dTable" class="table table-bordered w100"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

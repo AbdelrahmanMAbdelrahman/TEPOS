@@ -1,0 +1,200 @@
+﻿#txtItemOrBarcodeACC{
+    position: absolute;
+    top: 4px;
+    left: 0px;
+    padding: 0px;
+    height: 16px;
+}
+#txtItemOrBarcodeAC {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background: #f7f7f7;            
+    border: 1px solid #dfdfdf;
+    border-radius: 0px 0px 5px 5px;
+    max-height:400px;
+    overflow-y:auto;
+    
+}
+
+#txtItemOrBarcodeAC .txtItemOrBarcodeACI{
+    /*padding: 5px;*/
+    border: 0px solid;
+    background: #FFFFFF;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    width: 100%;
+    text-align: left;
+}
+        
+#txtItemOrBarcodeAC .txtItemOrBarcodeACI.active{
+    background : #5f5f5f;
+    color: #FFF;
+}
+
+#txtItemOrBarcodeAC .txtItemOrBarcodeACTR{
+    background : #fff;
+    color: #000 !important;
+}
+
+#txtItemOrBarcodeAC .txtItemOrBarcodeACITD{
+    padding: 0;
+    margin: 0;
+}
+
+#txtItemOrBarcodeACTR tr > td{
+    padding:1px !important;
+    height: auto;
+    border:1px solid #b4b4b4 !important;
+}
+.theadPrdSrcTbl > tr >th{
+    padding: 4px !important;
+    height: auto;
+    border: 1px solid #b4b4b4 !important;
+}
+
+.active > td {
+    background: #5f5f5f !important;
+    color: #fff;
+}
+
+.txtItemOrBarcodeACI{
+    cursor: pointer !important;
+}
+
+
+/**/
+#txtScientificNameACC {
+    position: absolute;
+    top: 4px;
+    left: 0px;
+    padding: 0px;
+    height: 16px;
+}
+
+#txtScientificNameAC {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background: #f7f7f7;
+    border: 1px solid #dfdfdf;
+    border-radius: 0px 0px 5px 5px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+    #txtScientificNameAC .txtScientificNameACI {
+        /*padding: 5px;*/
+        border: 0px solid;
+        background: #FFFFFF;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        width: 100%;
+        text-align: left;
+    }
+
+        #txtScientificNameAC .txtScientificNameACI.active {
+            background: #5f5f5f;
+            color: #FFF;
+        }
+
+    #txtScientificNameAC .txtScientificNameACTR {
+        background: #fff;
+        color: #000 !important;
+    }
+
+    #txtScientificNameAC .txtScientificNameACITD {
+        padding: 0;
+        margin: 0;
+    }
+
+#txtScientificNameACTR tr > td {
+    padding: 1px !important;
+    height: auto;
+    border: 1px solid #b4b4b4 !important;
+}
+
+.theadPrdSrcTbl > tr > th {
+    padding: 4px !important;
+    height: auto;
+    border: 1px solid #b4b4b4 !important;
+}
+
+.active > td {
+    background: #5f5f5f !important;
+    color: #fff;
+}
+
+.txtScientificNameACI {
+    cursor: pointer !important;
+}
+/**/
+
+#txtProductNameACC {
+    position: absolute;
+    top: 4px;
+    left: 0px;
+    padding: 0px;
+    height: 16px;
+}
+
+#txtProductNameAC {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background: #f7f7f7;
+    border: 1px solid #dfdfdf;
+    border-radius: 0px 0px 5px 5px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+    #txtProductNameAC .txtProductNameACI {
+        /*padding: 5px;*/
+        border: 0px solid;
+        background: #FFFFFF;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        width: 100%;
+        text-align: left;
+    }
+
+        #txtProductNameAC .txtProductNameACI.active {
+            background: #5f5f5f;
+            color: #FFF;
+        }
+
+    #txtProductNameAC .txtProductNameACTR {
+        background: #fff;
+        color: #000 !important;
+    }
+
+    #txtProductNameAC .txtProductNameACITD {
+        padding: 0;
+        margin: 0;
+    }
+
+#txtProductNameACTR tr > td {
+    padding: 1px !important;
+    height: auto;
+    border: 1px solid #b4b4b4 !important;
+}
+
+.theadPrdSrcTbl > tr > th {
+    padding: 4px !important;
+    height: auto;
+    border: 1px solid #b4b4b4 !important;
+}
+
+.active > td {
+    background: #5f5f5f !important;
+    color: #fff;
+}
+
+.txtProductNameACI {
+    cursor: pointer !important;
+}
+/**/

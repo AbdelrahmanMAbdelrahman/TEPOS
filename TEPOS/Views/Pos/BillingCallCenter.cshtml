@@ -1,0 +1,538 @@
+﻿@using ERP.Controllers.Manager
+@using ERP.CSharpLib
+@using ERP.Models
+
+
+@{
+    Layout = null;
+    ConnectionDatabase database = new ConnectionDatabase();
+    ErpManager erpManager = new ErpManager();
+    int cmnId = erpManager.CmnId;
+    int usrId = erpManager.UserId;
+    var companyInfo = @database.CompanyDbSet.First(w => w.Id == cmnId);
+    var userOfficeLst = erpManager.UserOffice;
+    var officeId = userOfficeLst.First();
+    var branchName = userOfficeLst.Count == 1 ? database.PosBrancheDbSet.First(f => f.Id == officeId).Name : "Admin of (" + companyInfo.Name + " )";
+    bool isFieldForStkTrns = ViewBag.Id == 1;
+
+}
+<!DOCTYPE html>
+<html dir="@(System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName == "ar" ? "rtl" : "ltr")"
+      lang="@System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Billing</title>
+    @Scripts.Render("~/bundles/WebFont")
+    <script>
+        WebFont.load({
+            google: {
+                "families": ["Lato:300,400,700,900"]
+            },
+            custom: {
+                "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular",
+                    "Font Awesome 5 Brands", "simple-line-icons"
+                ],
+                urls: ["../Scripts/lib/assets/css/fonts.min.css"]
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+
+    </script>
+
+    <!--CSS Files-->
+    @Styles.Render("~/CustomCSS/TCommonCss")
+
+    <!--Jquery JS-->
+    @Scripts.Render("~/bundles/jquery")
+
+    <!--   Core JS Files   -->
+    @Scripts.Render("~/bundles/CoreJSFiles")
+
+    <!-- jQuery UI -->
+    @Scripts.Render("~/bundles/jQueryUI")
+
+    @Scripts.Render("~/bundles/modernizr")
+
+    <!-- jQuery Scrollbar, Datatable, notify JS,Theme color settings, don't include it in your project!,JQ bootstrap validation -->
+    @Scripts.Render("~/bundles/BjqueryCmn")
+
+    <!-- select chosen -->
+    @Styles.Render("~/CustomCSS/SelectChosen")
+    @Scripts.Render("~/bundles/SelectChosen")
+
+    <!-- Datetime picker -->
+    @Styles.Render("~/CustomCSS/DateTimePicker")
+    @Scripts.Render("~/bundles/DateTimePicker")
+    <link href="~/Content/lib/search-table-utility.css" rel="stylesheet" />
+    <link href="~/Content/Custom/Pos/Pos/Billing.css" rel="stylesheet" />
+    <script src="~/Scripts/Custom/Pos/Pos/BillingCallCenter.js?@ProjectVersion.Version"></script>
+    <script src="~/Scripts/Custom/Pos/Pos/BillPrintJS.js?@ProjectVersion.Version"></script>
+    <script src="~/Scripts/Custom/Pos/Pos/CustomerAddOnBillingCallCenter.js?@ProjectVersion.Version"></script>
+
+</head>
+<body oncontextmenu="return true;">
+    <div class="page-inner p-0">
+        <div class="col-md-12 position-relative" id="process_notifi">
+
+            @* billing top *@
+            <div class="row billing-top-row">
+                <div class="min-height65 col">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="row">
+                                <div class="col-md-6 border-right" align="center">
+                                    <img src="~/Photos/logo.png" class="logo-size" /><br />
+                                    <span class="font-size-11px text-black-50">Powered by <b><a href="https://www.trend-egypt.com" target="_blank">Trend-POS</a></b></span>
+                                </div>
+                                <div class="col-md-6 border-right" align="center">
+                                    <img src="@companyInfo.Logo" class="logo-size" /><br />
+                                    <span class="font-size-10px"><b> @companyInfo.Name.ToUpper()</b></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 min-height65 border-right">
+                            <span class="font-size-12px"> <b>COMPANY :</b> @companyInfo.Name.ToUpper() </span> <br />
+                            @* <div class="font-size-12px pt-1"><b>OUTLET :</b> <span>@branchName.ToUpper()</span> </div>*@
+                            <div class="form-group form-inline control-group">
+                                <label class="col-md-4  itemLbl">Branch</label>
+                                <div class="col-md-8">
+                                    @* @Html.DropDownList("PosCustomer.PosBranchId", new SelectList("", ""), new { @id = "PosBranchId", @class = "form-control txtbox97" })*@
+                                    <select class="form-control input-sm" id="PosBranchId"></select>
+                                </div>
+                            </div>
+                            @{
+                                string vatIn = erpManager.SalesPriceIncOrExcVat == 1 ? "ALL VAT/TAX INCLUDED" : "ALL VAT/TAX EXCLUDED";
+                            }
+                            <div class="font-size-11px pt-1"><b class="color-black ">VAT/TAX :</b> <span id="spnSalesPriceIncExcVat" data-salespriceincexcvat="@erpManager.SalesPriceIncOrExcVat">@vatIn</span> </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-4 border-right min-height65 pt-0">
+                                    <span class="font-size-13px"> <b class="color-black-blue">Software Version :</b> 1.0.0.0 </span> <br />
+                                    <span class="font-size-13px"><b class="color-black-blue">Billing Date :</b> <span id="spnBillingDate">@UTCDateTime.BDDate().ToString("dd/MM/yyyy")</span></span><br />
+                                    <span class="font-size-13px"><b class="color-black ">Login User :</b> @database.UserDbSet.First(f => f.Id == usrId).LoginName</span>
+                                </div>
+                                <div class="col-md-3 border-right">
+                                    <div align="center">
+                                        <b class="color-black  font-size-15px">Invoice Items</b><br />
+                                        <span id="txtNumOfItem" class="color-blue font-size-25px fw-bold">00</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 border-right">
+                                    <div align="center">
+                                        <b class="font-size-15px color-black-blue">Invoice Qty</b><br />
+                                        <span id="spnInvoiceQty" class="font-size-25px color-black fw-bold">00.00</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div align="center">
+                                        <b class="color-black  font-size-15px">Last Invoice No</b><br />
+                                        <span id="txtLastInvoiceNo" class="font-size-25px fw-bold color-black-blue">0000</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-0 p-2 border-bottom"></div>
+            </div>
+
+            @* customer & grid &payment info div *@
+            <div class="row mt-1">
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="label-top-background font-size-12px">Item : Code Or Name</label><br />
+                            <div class="input-group w100">
+                                <input type="text" class="form-control input-sm" id="txtItemOrBarcode" placeholder="Scan barcode" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text position-relative">
+                                        <input type="checkbox" id="txtItemOrBarcodeACC" data-toggle="tooltip" title="Click to enable search option" checked="checked" />
+                                    </span>
+                                    <span class="input-group-text position-relative">
+                                        <input type="checkbox" id="chkEnableQtyChangeOption" data-toggle="tooltip" title="Click to enable select & break into the qty when you adding the product" checked="checked" />
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="pull-left" id="txtItemOrBarcodeAC"></div>
+
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="label-top-background font-size-12px">Product Name</label><br />
+                            <div class="input-group w100">
+                                <input type="text" class="form-control input-sm" id="txtProductName" placeholder="Enter Product Name" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text position-relative">
+                                        <input type="checkbox" id="txtProductNameACC" data-toggle="tooltip" title="Click to enable search option" checked="checked" />
+                                    </span>
+                                    <span class="input-group-text position-relative">
+                                        <input type="checkbox" id="chkProductName" data-toggle="tooltip" title="Click to enable select & break into the qty when you adding the product" checked="checked" />
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="pull-left" id="txtProductNameAC"></div>
+
+                        </div>
+                        <div class="col-md-2">
+                            <label class="label-top-background font-size-12px">Product Scientific Name</label><br />
+                            <div class="input-group w100">
+                                <input type="text" class="form-control input-sm" id="txtScientificName" placeholder="Enter Scientific Name" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text position-relative">
+                                        <input type="checkbox" id="txtScientificNameACC" data-toggle="tooltip" title="Click to enable search option" checked="checked" />
+                                    </span>
+                                    <span class="input-group-text position-relative">
+                                        <input type="checkbox" id="chkEnableQtyScientificName" data-toggle="tooltip" title="Click to enable select & break into the qty when you adding the product" checked="checked" />
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="pull-left" id="txtScientificNameAC"></div>
+
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="label-top-background font-size-12px">Points</label><br />
+                            <input type="number" class="form-control input-sm text-right" id="txtCustomerPoint" placeholder="0.00" />
+                        </div>
+                        <div class="col-md-2">
+                            <label class="label-top-background font-size-12px">Amount</label><br />
+                            <input type="number" class="form-control input-sm text-right" id="txtCustomerPointAmount" placeholder="0.00" />
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <label class="label-top-background font-size-12px">
+                                        @{
+                                            string customerOrOffice = isFieldForStkTrns ? "Office/Branch..." : "Customer....";
+                                        }
+                                        @customerOrOffice
+                                    </label><br />
+                                    <div class="input-group">
+                                        <select class="form-control input-sm" id="txtCustomer"></select>
+                                        <span class="input-group-append position-relative">
+                                            <span title="Add new customer" class="cusrorP input-group-text" id="spanAddCustomer"><i class="fa fa-plus-circle"></i></span>
+                                        </span>
+                                    </div>
+
+                                </div>
+
+
+                                @if (!isFieldForStkTrns)
+                                {
+                                    <div class="col-md-3">
+                                        <label class="label-top-background font-size-12px">
+                                            DeliveryMan....
+                                        </label><br />
+                                        <div class="input-group chosen-disabled">
+                                            <select class="form-control input-sm chosen-disabled" id="txtDeliveryMan"></select>
+
+                                            @*<span class="input-group-append position-relative">
+                                                    <span title="Add new customer" class="cusrorP input-group-text" id="spanAddCustomer"><i class="fa fa-plus-circle"></i></span>
+                                                </span>*@
+                                        </div>
+
+                                    </div>
+                                }
+
+                                <div class="col-md-4">
+                                    <label class="label-top-background font-size-12px">Notes</label><br />
+                                    <input type="text" class="form-control input-sm" id="txtNotes" placeholder="Enter Notes" />
+                                </div>
+                                @if (isFieldForStkTrns)
+                                {
+                                    <div class="col-md-3"><label class="checkbox-inline mt-4"><input type="checkbox" id="PrintByA4Page" /> Print By A4 </label></div>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            @* dTableBilling *@
+                            <table id="dTableBilling" class="inlineEditingDataTable table table-bordered w1000p"></table>
+                            @* end dTableBilling *@
+                        </div>
+                    </div>
+
+                    @* Bottom border *@
+                    <div class="row divFreeItemHead">
+                        <div class="col">
+                            <div align="center" class="font-size-14px font-weight">FREE ITEMS</div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            @* dTableFreeItems *@
+                            <table id="dTableFreeItems" class="inlineEditingDataTable table table-bordered table-condensed table-responsive w1000p"></table>
+                            @* end dTableFreeItems *@
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="col-md-3 border-left">
+                    <div class="row">
+                        <div class="col-md-12 mt-2">
+                            <div class="float-left w-per-30">
+                                <button id="btnHoldInvoice" disabled="@isFieldForStkTrns" class="btn btn-warning btn-sm btn-sm-25px">Save Invoice</button>
+                            </div>
+                            <div class="margin-left-6px float-left w-per-65">
+                                <div class="input-group">
+                                    <select class="input-sm form-control" aria-describedby="divRecallInputGroup" disabled="@isFieldForStkTrns" id="cmbHoldInvoice"></select>
+                                    <div class="input-group-append" id="divRecallInputGroup">
+                                        <input type="button" id="btnRecallInvoice" disabled="@isFieldForStkTrns" class="btn btn-info btn-sm btn-sm-25px" value="Recall Invoice" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* bottom border *@
+                    <div class="row div-billing-summary-top-border"></div>
+
+                    <div class="row margin-top-15px padding-left-5px padding-right-5px">
+                        <div class="col-lg-12 font-size-16px div-billing-summary-background">
+                            <table id="tblBillSummary">
+                                <tbody>
+                                    <tr><td class="tblBillSummaryW50">MRP Total</td><td>:</td><td><input type="number" class="w100 background-black-color-white  text-right input-sm text-border-none font-weight font-size-16px" value="0.00" readonly="readonly" id="txtMrpTotal" /></td></tr>
+                                    <tr><td class="tblBillSummaryW50">(-) Sch. Discount</td><td>:</td><td><input type="number" class="w100 background-black-color-white  text-right input-sm text-border-none font-weight font-size-16px" value="0.00" readonly="readonly" id="txtDiscount" /></td></tr>
+                                    <tr>
+                                        <td>(-) Other Dis.</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="number" class="otherDiscountCls text-right input-sm text-border-none font-weight font-size-13px" value="0.00" id="txtOtherDiscountPer" />
+                                            <input type="number" class="otherDiscountCls text-right input-sm text-border-none font-weight font-size-16px" value="0.00" id="txtOtherDiscountAmt" />
+                                        </td>
+                                    </tr>
+                                    <tr><td class="tblBillSummaryW50">(+) SD</td><td>:</td><td><input type="number" class="w100 background-black-color-white  text-right input-sm text-border-none font-weight font-size-16px" value="0.00" readonly="readonly" id="txtSd" /></td></tr>
+                                    <tr style="border-bottom: 1px solid #fff;"><td class="tblBillSummaryW50">(±) Vat/Tax</td><td>:</td><td><input type="number" class="w100 background-black-color-white  text-right input-sm text-border-none font-weight font-size-16px" value="0.00" readonly="readonly" id="txtVat" /></td></tr>
+                                    <tr><td class="tblBillSummaryW50">TOTAL</td><td>:</td><td><input type="number" class="w100 background-black-color-white  text-right input-sm text-border-none font-weight font-size-17px" value="0.00" readonly="readonly" id="txtTotal" /></td></tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    @*row tender grid *@
+                    <div class="row">
+                        <div class="col p-5px">
+                            @* tenderGrid *@
+                            <table id="dTableTender" class="inlineEditingDataTable table table-bordered table-condensed table-responsive w100"></table>
+                            @* end tenderGrid *@
+                        </div>
+                    </div>
+
+                    @* bottom border *@
+                    <div class="row dtInputTextAlign div-bottom-border"></div>
+
+                    <div class="row margin-top-16px">
+                        <div class="col-md-12">
+                            <div align="center" class="btn-group w100">
+                                @{
+                                    //string btnSaveInvoiceId = isFieldForStkTrns ? "btnSaveInvoiceStockTrns" : "btnSaveInvoice";
+
+                                }
+                                <button type="button" id="btnPrintLastInv" class="btn btn-primary btn-sm">Print Last Inv.</button>
+                                <button type="button" id="btnReprintInv" class="btn btn-info btn-sm"><i class="fas fa-print"> </i> Re-Print</button>
+                                @* <button id="@btnSaveInvoiceId" type="button" class="btn btn-primary btn-sm cls-btn-save-inv"><i class="fas fa-save"> </i> Save Inv</button>*@
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    @* bottom border *@
+                    <div class="row div-bordar-bottom-billing"></div>
+
+                    <div class="row margin-top-16px">
+                        <div class="col-md-12">
+                            <div align="center" class="btn-group w100">
+                                <button class="btn btn-info btn-sm" id="btnClear"><i class="fas fa-eraser"></i> Clear</button>
+                                <button class="btn btn-warning btn-sm" id="btnCancel"><i class="fas fa-ban"></i> Cancel Inv.</button>
+                                <button class="btn btn-info btn-sm" id="btnAddWarranty">Add Warranty</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* bottom border *@
+                    <div class="row div-bordar-bottom-billing"></div>
+
+                    <div class="row margin-top-16px">
+                        <div class="col-md-12">
+                            <div align="center" class="w100">
+                                <input type="text" maxlength="499" id="txtInvoiceRemarks" class="form-control input-sm32" placeholder="Remarks" />
+                                <a id="lnkExit" href="/PosDashBoard/PosDashBoard?moduleId=2" class="btn btn-danger btn-sm"> <i class="fas fa-times-circle"></i> Exit</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @* bottom border *@
+                    <div class="row div-bordar-bottom-billing"></div>
+
+                    <div class="row margin-top-15px">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="number" id="txtInvoiceFind" class="form-control input-sm32" placeholder="Invoice Number" />
+                                <span class="input-group-btn">
+                                    @{ string strFindInvoice = isFieldForStkTrns ? "btnFindInvoiceStockTrns" : "btnFindInvoice";}
+                                    <input id="@strFindInvoice" type="button" class="cls-btn-find-invoice btn btn-primary btn-sm" value="Find Invoice">
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    @* bottom border *@
+                    <div class="row div-bordar-bottom-billing"></div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    @* modal of warranty *@
+    <div class="modal fade" id="modalAddWarranty" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Warranty Issue of Invoice No: <b id="hInvoiceNo"> </b></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+
+                </div>
+                <div class="modal-body p-0">
+                    <div class="col-md-12">
+                        <table class="inlineEditingDataTable table table-bordered table-condensed table-responsive w1000p" id="dTableWarranty"></table>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <input id="btnPrintInvoiceWithWarrantyCard" type="button" value="Print Invoice With Warranty Card" class="btn btn-primary" />
+                    <input id="btnWarrantySave" type="button" value="Save Warranty" class="btn btn-success" />
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @* end of warranty modal *@
+
+
+
+    @* start customer modal *@
+    <div class="modal fade" id="modalCustomer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add New Customer</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                </div>
+                <div class="modal-body" style="padding: 5px 0 0 0;">
+
+                    <div class="form-horizontal">
+                        <div class="col-md-12">
+                            @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "customerForm" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true)
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group form-inline control-group">
+                                            <label class="col-md-4 itemLbl">Customer Class</label>
+                                            <div class="col-md-8 ">
+                                                @Html.DropDownList("PosCustomer.PosCustomerClassId", new SelectList("", ""), new { @id = "PosCustomerClassId", @class = "form-control txtbox97" })
+                                                <span class="required">*</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group form-inline control-group">
+                                            <label class="col-md-4 itemLbl">Phone</label>
+                                            <div class="col-md-8">
+                                                @Html.TextBox("PosCustomer.Phone", "", new { @id = "Phone", @class = "form-control txtbox97", @placeholder = "Phone" })
+                                                <span class="required">*</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group form-inline control-group">
+                                            <label class="col-md-4 itemLbl">First Name</label>
+                                            <div class="col-md-8">
+                                                @Html.TextBox("PosCustomer.FirstName", "", new { @id = "FirstName", @class = "form-control txtbox97", @placeholder = "First Name" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group form-inline control-group">
+                                            <label class="col-md-4  itemLbl">Last Name</label>
+                                            <div class="col-md-8">
+                                                @Html.TextBox("PosCustomer.LastName", "", new { @id = "LastName", @class = "form-control txtbox97", @placeholder = "Last Name" })
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group form-inline control-group">
+                                            <label class="col-md-4  itemLbl">Address Line1</label>
+                                            <div class="col-md-8">
+                                                @Html.TextArea("PosCustomer.Address", new { @id = "Address", @class = "form-control txtbox97", @placeholder = "Address Line 1" })
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group form-inline control-group">
+                                            <label class="col-md-4  itemLbl">Address Line2</label>
+                                            <div class="col-md-8">
+                                                @Html.TextArea("PosCustomer.Address2", new { @id = "Address2", @class = "form-control txtbox97", @placeholder = "Address Line 2" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group form-inline control-group">
+                                            <label class="col-md-4  itemLbl">Region</label>
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("PosCustomer.PosRegionId", new SelectList("", ""), new { @id = "PosRegionId", @class = "form-control txtbox97" })
+                                                <span class="required">*</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group form-inline control-group">
+                                            <label class="col-md-4  itemLbl">Nearest City/Zone</label>
+                                            <div class="col-md-8">
+                                                @Html.DropDownList("PosCustomer.PosCityOrNearestZoneId", new SelectList("", ""), new { @id = "PosCityOrNearestZoneId", @class = "txtbox97 form-control" })
+                                                <span class="required">*</span>
+                                            </div>
+                                        </div>
+                                        @*<div class="form-group form-inline control-group">
+                                                <label class="col-md-4  itemLbl">Branch</label>
+                                                <div class="col-md-8">
+                                                    @Html.DropDownList("PosCustomer.PosBranchIdForCustomer", new SelectList("", ""), new { @id = "PosBranchIdForCustomer", @class = "form-control txtbox97" })
+                                                </div>
+                                            </div>*@
+
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <input id="btnSaveCustomer" type="button" value="Save Customer Information" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    </div>
+    @* end of customer modal *@
+
+</body>
+</html>

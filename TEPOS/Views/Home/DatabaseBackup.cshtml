@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Database Backup";
+}
+
+<script src="~/Scripts/Custom/Home/BackupDatabase.js"></script>
+<div class="page-inner margin-top-15px">
+    <div class="row">
+        <div class="col-md-6 offset-3">
+            <div class="col">
+                <div align="center"><h3><i class="fas fa-database"></i>@HttpContext.GetGlobalResourceObject("Local", "Database Backup")</h3><hr /></div>
+            </div>
+            <div class="col">
+                <div class="form-horizontal">
+                    <div class="form-group form-inline control-group">
+                        <div class="col-md-9 offset-3">
+                            <label class="radio-inline float-left">
+                                <input type="radio"
+                                       value="false" checked="checked" name="isMdfFile" />.bak @HttpContext.GetGlobalResourceObject("Local", "File")
+                                </label>
+                                <label class="radio-inline float-left ml-3"> <input type="radio" value="true" name="isMdfFile" />.mdf @HttpContext.GetGlobalResourceObject("Local", "File")</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-inline control-group">
+                            <div class="col-md-3"><label>@HttpContext.GetGlobalResourceObject("Local", "Drive")</label></div>
+                            <div class="col-md-9"> <select id="cmbDrive" class="form-control input-full"></select></div>
+                        </div>
+                        <div class="form-group form-inline control-group">
+                            <div class="col-md-3">
+                                <label>@HttpContext.GetGlobalResourceObject("Local", "Database")</label>
+                            </div>
+                            <div class="col-md-9">
+                                <select disabled="disabled" id="cmbDatabase" class="form-control input-full"></select>
+                            </div>
+                        </div>
+                        <div class="form-group form-inline control-group">
+                            <div class="col-md-6 offset-6">
+                                <div align="right">
+                                    <input type="button" id="btnBackup" class="btn btn-success" value=@HttpContext.GetGlobalResourceObject("Local","Backup DB") />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,25 @@
+﻿.chosen-container-multi .chosen-choices{
+    min-height:28px !important;
+    line-height: 2;     
+}
+.chosen-container{
+    width: 100% !important;
+}
+#tblScmFreeIni > tbody > tr > td {
+    padding: 0px !important;
+    height: auto !important;
+}
+#tblScmFreeIni > thead > tr > th {
+    padding: 6px !important;
+    height: auto !important;
+}
+#tblScmFreeIni > tbody > tr > td > input {
+    border: none !important;
+  
+}
+#tblScmFreeIni > tbody > tr > td > input:focus {
+    border: 2px solid red !important;
+}
+#slabQAPrdModalBody .itemLbl{
+    text-align:left;
+}

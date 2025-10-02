@@ -1,0 +1,34 @@
+﻿.editIcon {
+    color: #2196F3;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.editIcon:hover {
+    color: #0a7193;
+}
+
+.saveIcon {
+    color: #07a310;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.saveIcon:hover {
+    color: #589E35;
+}
+
+.inptTxt {
+    border: none;
+    background: none;
+}
+
+.treeview ul {
+    background-color: #fff !important;
+}
+.spanMenuHeading{
+    font-size: 16px; font-style: normal; font-weight: 700;
+}
+.divPermissionBorderStyle{
+    border-bottom: 0.3px solid #f57676; border-bottom: 0.3px solid rgba(245, 118, 118, 0.22); display: inline-block; border-radius: 7px;
+}

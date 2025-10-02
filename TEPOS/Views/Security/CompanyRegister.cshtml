@@ -1,0 +1,192 @@
+﻿@model ERP.Models.Security.CmnCompany
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>Company Registration</title>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Styles.Render("~/CustomCSS/TCommonCss")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/CustomCSS/SelectChosen")
+    @Scripts.Render("~/bundles/SelectChosen")
+    @Scripts.Render("~/bundles/BjqueryCmn")
+
+    @Styles.Render("~/CustomCSS/DataTable")
+    @Scripts.Render("~/bundles/DataTable")
+    @*  <script src="~/Scripts/Custom/Security/CompanyRegistration.js"></script>*@
+    <style>
+        /*body {
+            color: #fff;
+        }*/
+    </style>
+
+</head>
+<body style="padding-top: 0; background-image: url(''); background-repeat: no-repeat; background-size: cover;">
+<div class="row" style="margin: 0;">
+
+    <div class="col-md-12" style="text-align: center">
+        <h2 >Welcome to <span style="color: #47bafd;"><a href="http://trend-egypt.com/" target="_blank"> Trend-POS</a></span> System Ltd.
+        </h2>
+        <span><h4 style="color: red;"> Please ensure the internet connection to complete this form.</h4> ( দয়াকরে এই ফর্মটি সম্পূর্ণ করার জন্য ইন্টারনেট সংযোগ নিশ্চিত করুন। )</span>
+    </div>
+
+
+    @using (Html.BeginForm("CreatingNewCompanyAccount", "Security", FormMethod.Post, new {@id = "frmCRegisterPost", @class = "form-horizontal", enctype = "multipart/form-data"}))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="col-md-7 col-md-offset-2 margin-top-50px">
+
+            <div class="form-group">
+                <label class="col-md-3">Vat/Tax</label>
+                <div class="col-md-9">
+                    @Html.DropDownListFor(m => m.SalesPriceIncOrExcVat, new List<SelectListItem>
+                    {
+                        new SelectListItem {Text = "ALL VAT/TAX EXCLUDED", Value = "2"},
+                        new SelectListItem {Text = "ALL VAT/TAX INCLUDED", Value = "1"}
+
+                    }, new {@class = "form-control txtbox97"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3">Business Type</label>
+                <div class="col-md-9">
+                    @Html.DropDownListFor(m => m.BusinessType,new List<SelectListItem>
+                    {
+                        new SelectListItem() {Value ="1",Text = "Grocery,Retailer,Supper Shop"},
+                        new SelectListItem() {Value ="2",Text = "Cafes & Restaurant"}
+                    
+                    },new { @class = "form-control txtbox97"})
+                    <span class="required">*</span><span class="clsValidate">@Html.ValidationMessageFor(m => m.Name)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3">Company Name</label>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.Name, new {@class = "form-control txtbox97", placeholder = "Company Name"})
+                    <span class="required">*</span><span class="clsValidate">@Html.ValidationMessageFor(m => m.Name)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3">No Of Branch</label>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.NoOfBranch, new {@class = "form-control txtbox97", placeholder = "No Of Pos Branch", @type = "number", @Value = "1"})
+                    <span class="required">*</span><span class="clsValidate">@Html.ValidationMessageFor(m => m.NoOfBranch)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3">Company Name(Arabic)</label>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.NameAddiLang, new {@class = "form-control txtbox97", placeholder = "Company Name In Arabic"})
+                    <span class="clsValidate">@Html.ValidationMessageFor(m => m.Name)</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3">Address</label>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.Address, new {@class = "form-control txtbox97", placeholder = "Company Address"})
+                    <span class="required">*</span><span class="clsValidate">@Html.ValidationMessageFor(m => m.Address)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3">Address In Arabic</label>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.AddressAddiLang, new {@class = "form-control txtbox97", placeholder = "Address In Arabic"})
+                    <span class="clsValidate">@Html.ValidationMessageFor(m => m.AddressAddiLang)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3">Address Head Office</label>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.AddressHeadOffice, new {@class = "form-control txtbox97", placeholder = "Address Head Office"})
+                    <span class="clsValidate">@Html.ValidationMessageFor(m => m.AddressHeadOffice)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3">Address Head Office(Arabic)</label>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.AddressHeadOfficeAddiLang, new {@class = "form-control txtbox97", placeholder = "Address Head Office (Arabic)"})
+                    <span class="clsValidate">@Html.ValidationMessageFor(m => m.AddressHeadOfficeAddiLang)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3">Email</label>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.Email, new {@class = "form-control txtbox97", placeholder = "Company Email"})
+                    <span class="required">*</span><span class="clsValidate">@Html.ValidationMessageFor(m => m.Email)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3">Registration No</label>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.RegistrationNo, new {@class = "form-control txtbox97", placeholder = "Registration No"})
+                    <span class="required">*</span><span class="clsValidate">@Html.ValidationMessageFor(m => m.RegistrationNo)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3">Web Address</label>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.WebAddress, new {@class = "form-control txtbox97", placeholder = "Company Web Addres/Site"})
+                    <span class="clsValidate">@Html.ValidationMessageFor(m => m.WebAddress)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3">Others</label>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.Others, new {@class = "form-control txtbox97", placeholder = "Other"})
+                    <span class="clsValidate">@Html.ValidationMessageFor(m => m.Others)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3">Phone</label>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.Phone, new {@class = "form-control txtbox97", placeholder = "Company Phone"})
+                    <span class="required">*</span><span class="clsValidate">@Html.ValidationMessageFor(m => m.Phone)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3">VatRegNo</label>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.VatRegNo, new {@class = "form-control txtbox97", placeholder = "Vat Registration No"})
+                    <span class="required">*</span><span class="clsValidate">@Html.ValidationMessageFor(m => m.VatRegNo)</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3">Company Logo</label>
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.LogoFile, new {@class = "form-control txtbox97", @type = "file"})
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-9 col-md-offset-3">
+                    <input type="submit" value="Save Change" class="btn btn-success pull-right" style="margin-right: 19px"/>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+        </div>
+    }
+</div>
+@{
+    if (TempData["msg"] != null)
+     {
+         <script type="text/javascript">
+             AjaxManager.showPopUpMsg('@TempData["type"]', '@Html.Raw(TempData["msg"])', '');
+         </script>
+     }
+}
+</
+body>
+</html>

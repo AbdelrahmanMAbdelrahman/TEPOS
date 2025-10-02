@@ -1,0 +1,237 @@
+﻿body {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    background: #f1f1f1 !important;
+}
+
+.well-without-padding {
+    background: #fff;
+}
+
+.label-top-background {
+    margin: 0px !important;
+    padding: 0px 0px 0px 4px;
+}
+
+.input-sm {
+    height: 25px !important;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.chosen-container-single .chosen-single {
+    height: 25px !important;
+    line-height: 22px !important;
+}
+#chkEnableQtyChangeOption {
+    position: absolute;
+    top: 4px;
+    padding: 13px;
+    height: 16px;
+    margin-left: -12px;
+}
+#txtCustomer_chosen {
+    width: 85% !important;
+}
+.min-height65 {
+    min-height: 65px;
+}
+
+.billing-top-row {
+    padding-top: 8px; 
+    background: linear-gradient(to bottom, #64b3ef 0%, #90c6ff 100%);
+}
+
+.border-right {
+    border-right: 1px solid #efe4e4;
+}
+
+.logo-size {
+    width: 57px; height: 46px;
+}
+.color-black {
+    color: #000;
+}
+.color-black-blue {
+    color: #18466e;
+}
+body {
+    color: #323236;
+}
+.color-blue {
+    color: #0000ff;
+}
+.border-bottom {
+    border-bottom: 1px solid #efe4e4;
+}
+.border-left {
+    border-left: 1px solid #efe4e4;
+}
+.input-group-text {
+    padding: 3px 9px;
+    background: #bdbbbb;
+    border: none;
+}
+#txtItemOrBarcodeAC {
+    box-shadow: 4px 5px 7px 0px;
+
+}
+#txtItemOrBarcodeACC{
+     position: initial !important;
+}
+#txtScientificNameAC {
+    box-shadow: 4px 5px 7px 0px;
+}
+
+#txtScientificNameACC {
+    position: initial !important;
+}
+#txtProductNameAC {
+    box-shadow: 4px 5px 7px 0px;
+}
+
+#txtProductNameACC {
+    position: initial !important;
+}
+#tblBillSummary td {
+    font-weight: bold;
+}
+
+.tblBillSummaryW50 {
+    width: 50%;
+}
+
+.mt--30 {
+    margin-top: -30px;
+}
+.w-per-30 {
+    width: 30%;
+}
+.w-per-65 {
+    width: 65%;
+}
+
+.background-black-color-white {
+    background: #000 !important;
+    color: #fff !important;
+}
+.text-border-none {
+    border: none !important;
+}
+.text-border-none:focus {
+    border: none !important;
+}
+.font-weight {
+    font-weight: bold;
+}
+
+.divFreeItemHead {
+    padding: 3px !important;
+    margin: 10px 0px 0px 0 !important;
+    border-bottom: 1px solid #fff !important;
+    border-top: 1px solid #fff !important;
+    background: #4fa2d2 !important;
+    color: #fff;
+}
+
+.div-billing-summary-top-border {
+    padding: 8px 0px 8px 0px;
+    margin: -11px;
+    border-bottom: 1px solid #fff;
+}
+
+.div-billing-summary-background {
+    background: #000;
+    color: #fff;
+    border-radius: 4px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+#txtOtherDiscountPer {
+    float: left;
+    width: 39%;
+    background: #2196F3;
+    color: #fff;
+}
+#txtOtherDiscountAmt {
+    float: right;
+    background: #ff5722;
+    color: #fff;
+    width: 59%;
+}
+
+.div-bottom-border {
+    padding: 8px 0px 4px 0px;
+    margin: -11px;
+    border-bottom: 1px solid #fff;
+}
+
+#btnPrintLastInv {
+    width: 33%;
+}#btnReprintInv {
+    width: 34%;
+}.cls-btn-save-inv {
+    width: 33%;
+}
+
+ #dTableTender{
+     margin-top: 5px !important;
+ }
+
+ #btnPrintLastInv{
+     width: 33%;
+ }
+
+ #btnReprintInv{
+     width: 34%;
+ }
+
+ .cls-btn-save-inv{
+      width: 33%;
+ }
+
+ .div-bordar-bottom-billing{
+     padding: 8px 0px 7px 0px; margin: -11px; border-bottom: 1px solid #fff;
+ }
+ #btnClear{
+     float: left; width: 30%;
+ }
+
+ #btnCancel{
+     float: left; width: 34%;
+ }
+ #btnAddWarranty{
+     float: left; width: 36%;
+ }
+
+ #txtInvoiceRemarks{
+     width: 73%; float: left;
+ }
+ #lnkExit{
+     float: right; width: 26%;
+ }
+ .cls-btn-find-invoice{
+     border-bottom-left-radius: 0px !important; border-top-left-radius: 0px !important;
+ }
+ #dTableWarranty{
+     margin-top:2px !important;
+ }
+#btnOpenSearchPopup {
+    cursor: pointer;
+}
+
+.modal-lg {
+    max-width: 90%; 
+}
+/* Ensure table doesn't cause horizontal scrolling */
+#invoiceSearchResults table {
+    width: 100%;
+    table-layout: auto; /* Adjust column sizes automatically */
+}
+
+/* Optional: Improve table responsiveness */
+#invoiceSearchResults {
+    overflow-x: auto; /* Allow horizontal scrolling only if necessary */
+}
+
+

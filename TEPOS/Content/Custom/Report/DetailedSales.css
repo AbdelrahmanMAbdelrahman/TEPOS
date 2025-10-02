@@ -1,0 +1,14 @@
+﻿ select {
+        height: 34px !important;
+    }
+
+    #cmbBranch_chosen {
+        width: 97% !important;
+        float: left;
+    }
+
+    .chosen-container-multi .chosen-choices {
+        height: 34px !important;
+        line-height: 2.5 !important;
+        border-radius: 3px !important;
+    }

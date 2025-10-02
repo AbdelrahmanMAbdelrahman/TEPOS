@@ -1,0 +1,15 @@
+﻿body::after {
+    content: "";
+    background: url('/Photos/login-background.jpg');
+    opacity: 0.9;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.login-frame {
+    background: #fff; padding: 30px; border-radius: 5px;
+}

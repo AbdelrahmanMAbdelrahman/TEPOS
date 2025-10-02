@@ -1,0 +1,154 @@
+﻿@model ERP.Models.Security.SecUser
+@{
+    ViewBag.Title = "User";
+}
+<script src="~/Scripts/Custom/Security/User.js"></script>
+
+
+<div class="page-inner margin-top-15px">
+    <div class="modal fade" id="frmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">@HttpContext.GetGlobalResourceObject("Local", "User Create")</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "UsrPostId", @class = "form-horizontal" }))
+                    {
+                        <div class="form-group form-inline control-group">
+                            <label class="col-md-3">@HttpContext.GetGlobalResourceObject("Local", "Email")</label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.Email,
+      new { @class = "form-control txtbox97", @id = "email", placeholder = @HttpContext.GetGlobalResourceObject("Local", "Email") })
+                        </div>
+                    </div>
+                    <div class="form-group form-inline control-group">
+                        <label class="col-md-3">@HttpContext.GetGlobalResourceObject("Local", "Terminal ID")</label>
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(m => m.TerminalId, new
+                            {
+                                @class = "form-control txtbox97",
+                                placeholder = @HttpContext.GetGlobalResourceObject("Local",
+                           "User Terminal ID")
+                            })
+                            <span class="required">*</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-inline control-group">
+                        <label class="col-md-3">@HttpContext.GetGlobalResourceObject("Local", "Login Name")</label>
+                        <div class="col-md-9">
+                            @Html.TextBoxFor(m => m.LoginName, new { @class = "form-control txtbox97", @id = "logName", placeholder = @HttpContext.GetGlobalResourceObject("Local", "Login Name") })
+                            <span class="required">*</span><span class="clsValidate">@Html.ValidationMessageFor(m => m.LoginName)</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-inline control-group" id="Pass">
+                        <label class="col-md-3">@HttpContext.GetGlobalResourceObject("Local", "Password")</label>
+                        <div class="col-md-9 col-sm-12 col-xs-12">
+                            @Html.PasswordFor(m => m.Password, new
+                            {
+                                @class = "form-control txtbox97",
+                                @id = "logPass",
+                                placeholder = @HttpContext.GetGlobalResourceObject("Local",
+                           "Password")
+                            })
+                            <span class="required">*</span> <span class="clsValidate">@Html.ValidationMessageFor(m => m.Password)</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-inline control-group" id="conPass">
+                        <label class="col-md-3">@HttpContext.GetGlobalResourceObject("Local", "Confirm Password")</label>
+                        <div class="col-md-9 col-sm-12 col-xs-12">
+                            @Html.PasswordFor(m => m.ConfirmPassword, new
+                            {
+                                @class = "form-control txtbox97",
+                                @id = "logconfirmPass",
+                           placeholder = @HttpContext.GetGlobalResourceObject("Local", "Confirm Password")
+                            })
+                            <label class="clsValidate">
+                                <span class="clsValidate">
+                                    @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group form-inline control-group">
+                    <label class="col-md-3">@HttpContext.GetGlobalResourceObject("Local", "Status")</label>
+
+                    <div class="col-md-9">
+                        <div class="form-check">
+                            <label class="form-radio-label">
+                                @Html.RadioButtonFor(m => m.Status, true, new { @Id = "stsActive", @Class = "userinput" })
+                                <span class="pl-2">
+                                    @HttpContext.GetGlobalResourceObject("Local", "Active")
+                                </span>
+                            </label>
+                            <label class="form-radio-label">
+                                @Html.RadioButtonFor(m => m.Status, false, new { @Id = "stsInactive", @Class = "userinput" })
+                                <span class="pl-2">
+                                    @HttpContext.GetGlobalResourceObject("Local", "Inactive")
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group form-inline control-group" id="Pass">
+                    <label class="col-md-3">
+                        @HttpContext.GetGlobalResourceObject("Local", "UserCode")
+                    </label>
+                    <div class="col-md-9 col-sm-12 col-xs-12">
+                        @Html.PasswordFor(m => m.UserCode, new
+                        {
+                            @class = "form-control txtbox97",
+                            @id = "UserCode",
+                       placeholder = @HttpContext.GetGlobalResourceObject("Local",
+                       "UserCode")
+                        })
+                        <span class="required">*</span> <span class="clsValidate">@Html.ValidationMessageFor(m => m.UserCode)</span>
+                    </div>
+                </div>
+            }
+                </div>
+
+                <div class="modal-footer">
+                    <input id="btnSave" type="submit" value=@HttpContext.GetGlobalResourceObject("Local","Save Changes") class="btn btn-success btn-sm" />
+                    <input id="btnEdit" type="button" value=@HttpContext.GetGlobalResourceObject("Local","Update") class="btn btn-warning btn-sm" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">
+                            <i class="fas fa-user"></i>
+                            @HttpContext.GetGlobalResourceObject("Local", "User Information")
+                        </h4>
+                        <button id="btnAddUser" class="btn btn-primary btn-sm btn-round ml-auto">
+                            <i class="fa fa-plus"></i>
+                            @HttpContext.GetGlobalResourceObject("Local", "Add New User")
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="tableElement" class="table table-bordered w100"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

@@ -1,0 +1,28 @@
+﻿@using ERP.CSharpLib
+@{
+    ViewBag.Title = "Make Branch Zero Stock";
+}
+<link href="~/Content/Custom/Pos/Stock/StockAdjustment.css" rel="stylesheet" />
+<link href="~/Content/lib/search-table-utility.css" rel="stylesheet" />
+<script src="~/Scripts/Custom/Pos/Stock/MakeBranchZeroStock.js?@ProjectVersion.Version"></script>
+
+<div class="page-inner margin-top-15px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <input type="button" class="btn btn-sm btn-info btn-sm" value=@HttpContext.GetGlobalResourceObject("Local","Make Branch Zero Stock") id="btnMakeBranchZeroStock" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+

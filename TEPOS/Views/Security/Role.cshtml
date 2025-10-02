@@ -1,0 +1,91 @@
+﻿@model ERP.Models.Security.SecRole
+@{
+    ViewBag.Title = "Role";
+}
+<script src="~/Scripts/Custom/Security/Role.js"></script>
+
+
+<div class="page-inner margin-top-15px">
+    <div class="modal fade" id="frmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">@HttpContext.GetGlobalResourceObject("Local", "Role Create")</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "fmrPost", @class = "form-horizontal" }))
+                    {
+                        <div class="form-group form-inline control-group">
+                            <label class="col-md-3">
+                                @HttpContext.GetGlobalResourceObject("Local", "Role")
+                            </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.Name, new
+                                {
+                                    @class = "form-control txtbox97",
+                                    placeholder =
+                          @HttpContext.GetGlobalResourceObject("Local", "Role")
+                                })
+                            <span class="required">*</span><span class="clsValidate">@Html.ValidationMessageFor(m => m.Name)</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-inline control-group">
+                        <label class="col-md-3">
+                            @HttpContext.GetGlobalResourceObject("Local", "Status")
+                        </label>
+
+                        <div class="col-md-9">
+                            <div class="form-check">
+                                <label class="form-radio-label">
+                                    @Html.RadioButtonFor(m => m.Status, true,
+                                   new { @Id = "stsActive", @Class = "userinput" })<span class="pl-2">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Active")
+                                    </span>
+                                </label>
+                                <label class="form-radio-label">
+                                    @Html.RadioButtonFor(m => m.Status, false,
+                                   new { @Id = "stsInactive", @Class = "userinput" })<span class="pl-2">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Inactive")
+                                    </span>
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+                </div>
+
+                <div class="modal-footer">
+                    <input id="btnSave" type="submit" value=@HttpContext.GetGlobalResourceObject("Local","Save Change")
+                           class="btn-sm btn btn-success" />
+                    <input id="btnEdit" type="button" value=@HttpContext.GetGlobalResourceObject("Local","Update")
+                           class="btn btn-sm btn-warning" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">
+                            <i class="fas fa-user"></i>
+                        </h4>
+                        <button id="btnAddRole" class="btn btn-primary btn-sm btn-round ml-auto">
+                            <i class="fa fa-plus"></i>@HttpContext.GetGlobalResourceObject("Local", "Add New Role")
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="tableElement" class="table table-bordered w100"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

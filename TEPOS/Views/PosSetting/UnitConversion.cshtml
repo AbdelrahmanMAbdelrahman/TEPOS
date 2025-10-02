@@ -1,0 +1,135 @@
+﻿@{
+    ViewBag.Title = "Unit Conversion";
+}
+@model ERP.Models.VModel.VmUnitConversion
+
+<script src="~/Scripts/Custom/Pos/Settings/UnitConversion.js"></script>
+
+<div class="page-inner margin-top-15px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">
+                            @HttpContext.GetGlobalResourceObject("Local", "Unit  Conversion")
+                        </h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "unitConversionForm", @class = "form-horizontal" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true)
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-4 itemLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Unit Group")
+                                    </label>
+                                    <div class="col-md-8">
+                                        <div class="txtbox97 input-group">
+                                            @Html.DropDownListFor(m => m.UomGroupDetail.PosUomGroupId, new SelectList("", ""),
+                                           new { @id = "PosUomGroupId", @class = "form-control" })
+                                            <div class="input-group-addon no-print plusIcon p-1">
+                                                <i class="fa fa-plus-circle cusrorP" id="addUomGroup" title=@HttpContext.GetGlobalResourceObject("Local", "Add new UOM group")></i>
+                                                <i class="fas fa-edit cusrorP ml-2" id="editUomGroup" title="Update UOM group"></i>
+                                            </div>
+                                        </div>
+                                        <span class="required">*</span>
+                                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.UomGroupDetail.PosUomGroupId) </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-4 itemLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Unit Name")
+                                    </label>
+                                    <div class="col-md-8">
+                                        @Html.DropDownListFor(m => m.UomGroupDetail.PosUomMasterId, new SelectList("", ""),
+                                       new { @id = "PosUomMasterId", @class = "form-control txtbox97" })
+                                        <span class="required">*</span>
+                                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.UomGroupDetail.PosUomMasterId) </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-4 itemLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Conversion Factor")
+                                    </label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(m => m.UomGroupDetail.ConversionFactor, new
+                                        {
+                                            @id = "ConversionFactor",
+                                       @class = "form-control txtbox97",
+                                            @placeholder =
+                                      HttpContext.GetGlobalResourceObject("Local", "Conversion Factor")
+                                        })
+                                        <span class="required">*</span>
+                                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.UomGroupDetail.ConversionFactor) </span>
+                                    </div>
+                                </div>
+
+                            }
+                            <div class="form-group form-inline control-group">
+                                <div class="col-md-10 offset-2">
+                                    <div class="pull-right">
+                                        <input type="button" id="btnSave" class="btn btn-success btn-sm btn-sm" value=@HttpContext.GetGlobalResourceObject("Local", "Save Changes") />
+                                        <input type="button" id="btnEdit" class="btn btn-warning btn-sm btn-sm" value=@HttpContext.GetGlobalResourceObject("Local", "Update") />
+                                        <input type="button" id="btnClear" class="btn btn-primary btn-sm btn-sm" value=@HttpContext.GetGlobalResourceObject("Local" ,"Clear") />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="col">
+                                <table id="dTable" class="table table-bordered w100"></table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@* Uom Group *@
+<div class="modal fade" id="frmModalUomGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    @HttpContext.GetGlobalResourceObject("Local", "Uom Group")
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+            </div>
+            <div class="modal-body">
+                <div class="col">
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "frmUomGroupPost", @class = "form-horizontal" }))
+                    {
+                        <div class="form-group form-inline control-group">
+                            <label class="col-md-3">
+                                @HttpContext.GetGlobalResourceObject("Local", "Unit Group")
+                            </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.UomGroup.Name, new { @class = "form-control txtbox97" })
+                                <span class="required">*</span>
+                                <span class="clsValidate">@Html.ValidationMessageFor(m => m.UomGroupDetail.ConversionFactor) </span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <input id="btnSaveUomGroup" type="submit" value="Save" class="btn btn-success btn-sm" />
+                <input id="btnEditUomGroup" type="button" value="Update" class="btn btn-warning btn-sm" />
+            </div>
+        </div>
+    </div>
+</div>
+@* end of Uom Group *@
+

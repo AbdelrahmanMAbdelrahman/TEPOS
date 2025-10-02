@@ -1,0 +1,271 @@
+﻿@{
+    ViewBag.Title = "Role Permission";
+
+}
+@using ERP.Models
+@using ERP.Models.VModel
+@model ERP.Models.Security.SecResourcePermission
+@{
+    ViewBag.Title = "ResourcePermission";
+    ConnectionDatabase dbcontext = new ConnectionDatabase();
+
+}
+
+@Styles.Render("~/CustomCSS/JqTreeView")
+@Scripts.Render("~/bundles/JqTreeView")
+<script>
+    var addChildResourceUrl = '@Url.Action("AddChildResource", "SecResource")';
+    var deleteResourceUrl = '@Url.Action("DeleteResource", "SecResource")';
+</script>
+<link href="~/Content/Custom/Security/RolePermission.css" rel="stylesheet" />
+<script src="~/Scripts/Custom/Security/RolePermission.js"></script>
+
+
+<div class="page-inner margin-top-15px">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">
+                            <i class="fas fa-user-cog"></i>@HttpContext.GetGlobalResourceObject("Local",
+"Role Permission")
+                        </h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "RPermissionPostId", @class = "form-horizontal" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary()
+
+
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-5">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Role Name")<span class="clon">:</span>
+                                    </label>
+                                    <div class="col-md-7">
+                                        @Html.DropDownListFor(m => m.SecRoleId, new SelectList("", ""),
+                                   new { @class = "form-control input-full", @id = "rollId" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-5">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Module Name")<span class="clon">:</span>
+                                    </label>
+                                    <div class="col-md-7">
+                                        @Html.DropDownListFor(m => m.SecResourceId, new List<SelectListItem>
+                            {
+                            new SelectListItem {Text = "Point Of Sales", Value = "1"},
+                            }, new
+                            {
+                                @class = "form-control input-full",
+                                @id = "resourceId",
+                                placeholder =
+                            @HttpContext.GetGlobalResourceObject("Local", "User ID")
+                            })
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+
+                        <div class="col-md-7 col-md-offset-1">
+                            @{
+
+                                var resourceList = (List<ResourceViewModel>)ViewBag.ResourceList;
+
+                                <ul id="red" class="treeview-red">
+                                    <li>
+                                        <span class="spanMenuHeading">@HttpContext.GetGlobalResourceObject("Local", "Menu List")</span>
+                                        <ul>
+                                            <li>
+                                                <span>
+                                                    <input type="checkbox" data-type="NO" data-roleprmiid="0"
+                                                           id="Chk_Parent" onchange="UpdateStatus('Chk_Parent', '')" />
+                                                    @HttpContext.GetGlobalResourceObject("Local", "All")
+                                                </span>
+                                                <ul>
+                                                    @foreach (var p in resourceList.Where(m => m.Level == 1))
+                                                    {
+                                                        <li class="parentLi">
+                                                            @if (p.RoleLevel == 0)
+                                                            {
+                                                                <input data-type="0" type="checkbox" checked="@p.Status"
+                                                                       id="chk_@p.RpermiId" data-resprmiid="@p.RpermiId"
+                                                                       onchange="UpdateStatus('chk_@p.RpermiId', 'rolePrmiWithResourcePrmi');" />
+                                                                <div class="divPermissionBorderStyle">
+                                                                    <input id='inpt_@p.RpermiId' type="text" disabled="disabled" class="inptTxt"
+                                                                           placeholder="@HttpContext.GetGlobalResourceObject("Local", p.Name)" value=
+                                                                           "@HttpContext.GetGlobalResourceObject("Local", p.DisplayName)" />
+                                                                    @if (p.IsReport)
+                                                                    {
+                                                                        <input type="checkbox" checked="@p.AddPermi" id="chkAdd_@p.RolePrmId" 
+                                                                               data-type="add" data-roleprmiid="@p.RolePrmId" onchange="UpdateStatus('chkAdd_@p.RolePrmId', 'inputprmi');" />
+                                                                        <span>@HttpContext.GetGlobalResourceObject("Local", "Preview")</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <input type="checkbox" checked="@p.AddPermi" id="chkAdd_@p.RolePrmId"
+                                                                               data-type="add" data-roleprmiid="@p.RolePrmId"
+                                                                               onchange="UpdateStatus('chkAdd_@p.RolePrmId', 'inputprmi');" />
+                                                                        <span>@HttpContext.GetLocalResourceObject("Local", "Add")</span>
+                                                                        <input type="checkbox" checked="@p.EditPermi" id="chkEdit_@p.RolePrmId"
+                                                                               data-type="edit" data-roleprmiid="@p.RolePrmId"
+                                                                               onchange="UpdateStatus('chkEdit_@p.RolePrmId', 'inputprmi');" />
+                                                                        <span>
+                                                                            @HttpContext.GetLocalResourceObject("Local", "Edit")
+                                                                        </span>
+                                                                    }
+
+                                                                    <span title=@HttpContext.GetGlobalResourceObject("Local", "click for edit") id='edit_@p.RpermiId'
+                                                                          class="fas fa-edit editIcon" onclick="EditSpan('inpt_@p.RpermiId', 'save_@p.RpermiId', 'edit_@p.RpermiId');"></span>
+                                                                    <span title=@HttpContext.GetGlobalResourceObject("Local", "click to save") id='save_@p.RpermiId'
+                                                                          class="fas fa-check saveIcon"
+                                                                          style="display: none;" onclick="SaveSpan('inpt_@p.RpermiId', 'save_@p.RpermiId',    
+                            'edit_@p.RpermiId', @p.RpermiId);"></span>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+
+                                                                <span>
+                                                                    <input data-type="0" type="checkbox" checked="@p.Status" id="chk_@p.RpermiId"
+                                                                           data-resprmiid="@p.RpermiId" onchange="UpdateStatus('chk_@p.RpermiId', '');" />
+                                                                    <input id='inpt_@p.RpermiId' type="text" disabled="disabled" class="inptTxt"
+                                                                           placeholder="@p.Name" value="@HttpContext.GetGlobalResourceObject("Local", p.DisplayName)" />
+                                                                    <span title="click for edit" id='edit_@p.RpermiId' class="fas fa-edit editIcon"
+                                                                          onclick="EditSpan('inpt_@p.RpermiId', 'save_@p.RpermiId', 'edit_@p.RpermiId');"></span>
+                                                                    <span title=@HttpContext.GetGlobalResourceObject("Local", "click to save") id='save_@p.RpermiId' class="fas fa-check saveIcon"
+                                                                          style="display: none;" onclick="SaveSpan('inpt_@p.RpermiId', 'save_@p.RpermiId',
+                                                                          'edit_@p.RpermiId', @p.RpermiId);">
+                                                                    </span>
+                                                                    <span title=@HttpContext.GetGlobalResourceObject("Local", "Add child item")
+                                                                          id='add_@p.RpermiId' class="fas fa-plus addIcon"
+                                                                          onclick="AddNestedItem(@p.RpermiId, @p.ResId);"></span>
+
+
+                                                                </span>
+                                                            }
+
+                                                            <ul>
+                                                                @foreach (var p1 in resourceList.Where(m => m.Level == p.ResId))
+                                                                {
+                                                                    <li>
+                                                                        @if (p1.RoleLevel == 1)
+                                                                        {
+                                                                            <input data-type="0" type="checkbox" checked="@p1.Status" id="chk_@p1.RpermiId"
+                                                                                   data-resprmiid="@p1.RpermiId" onchange="UpdateStatus('chk_@p1.RpermiId', 'rolePrmiWithResourcePrmi');" />
+                                                                            <div class="divPermissionBorderStyle">
+                                                                                <input id='inpt_@p1.RpermiId' type="text" disabled="disabled" class="inptTxt" placeholder="@HttpContext.GetGlobalResourceObject("Local", p1.Name)"
+                                                                                       value="@HttpContext.GetGlobalResourceObject("Local", p1.DisplayName)" />
+
+                                                                                @if (p1.IsReport)
+                                                                                {
+                                                                                    <input type="checkbox" checked="@p1.AddPermi" id="chkAdd_@p1.RolePrmId" data-type="add"
+                                                                                           data-roleprmiid="@p1.RolePrmId" onchange="UpdateStatus('chkAdd_@p1.RolePrmId', 'inputprmi');" />
+                                                                                    <span>@HttpContext.GetGlobalResourceObject("Local", "Preview")</span>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    List<int> billAndStockTrnsRes = new List<int>() { 15, 26 };
+
+                                                                                    string addPermi = "Add";
+                                                                                    string editPermi = "Edit";
+                                                                                    string deletePermi = "Delete";
+                                                                                    if (billAndStockTrnsRes.Contains((int)p1.SecResourceId))
+                                                                                    {
+                                                                                        addPermi = "Save Inv";
+                                                                                        deletePermi = "Cancel Inv";
+                                                                                    }
+
+                                                                                    <input type="checkbox" checked="@p1.AddPermi" id="chkAdd_@p1.RolePrmId" data-type="add" data-roleprmiid="@p1.RolePrmId" onchange="UpdateStatus('chkAdd_@p1.RolePrmId', 'inputprmi');" />
+                                                                                    <span>@HttpContext.GetGlobalResourceObject("Local", addPermi)</span>
+                                                                                    if (!billAndStockTrnsRes.Contains((int)p1.SecResourceId))
+                                                                                    {
+                                                                                        <input type="checkbox" checked="@p1.EditPermi" id="chkEdit_@p1.RolePrmId" data-type="edit" data-roleprmiid="@p1.RolePrmId" onchange="UpdateStatus('chkEdit_@p1.RolePrmId', 'inputprmi');" />
+                                                                                        <span>@HttpContext.GetGlobalResourceObject("Local", editPermi)</span>
+                                                                                    }
+                                                                                    <input type="checkbox" checked="@p1.DeletePermi" id="chkDelete_@p1.RolePrmId" data-type="delete" data-roleprmiid="@p1.RolePrmId" onchange="UpdateStatus('chkDelete_@p1.RolePrmId', 'inputprmi');" />
+                                                                                    <span>@HttpContext.GetGlobalResourceObject("Local", deletePermi)</span>
+                                                                                }
+
+                                                                                <span title=@HttpContext.GetGlobalResourceObject("Local", "click for edit") id='edit_@p1.RpermiId' class="fas fa-edit editIcon"
+                                                                                      onclick="EditSpan('inpt_@p1.RpermiId', 'save_@p1.RpermiId', 'edit_@p1.RpermiId');"></span>
+                                                                                <span title=@HttpContext.GetGlobalResourceObject("Local" ,"click to save") id='save_@p1.RpermiId' class="fas fa-check saveIcon"
+                                                                                      style="display: none;" onclick="SaveSpan('inpt_@p1.RpermiId', 'save_@p1.RpermiId', 'edit_@p1.RpermiId', @p1.RpermiId);"></span>
+                                                                            </div>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span>
+                                                                                <input data-type="0" type="checkbox" checked="@p1.Status" id="chk_@p1.RpermiId" data-resprmiid="@p1.RpermiId" onchange="UpdateStatus('chk_@p1.RpermiId', '');" />
+                                                                                <input id='inpt_@p1.RpermiId' type="text" disabled="disabled" class="inptTxt" placeholder="@p1.Name" value="@p1.DisplayName" />
+                                                                                <span title="click for edit" id='edit_@p1.RpermiId' class="fas fa-edit editIcon" onclick="EditSpan('inpt_@p1.RpermiId', 'save_@p1.RpermiId', 'edit_@p1.RpermiId');"></span>
+                                                                                <span title="click to save" id='save_@p1.RpermiId' class="fas fa-check saveIcon" style="display: none;" onclick="SaveSpan('inpt_@p1.RpermiId', 'save_@p1.RpermiId', 'edit_@p1.RpermiId', @p1.RpermiId);"></span>
+
+                                                                            </span>
+                                                                        }
+                                                                        <ul>
+                                                                            @foreach (var p2 in resourceList.Where(m => m.Level == p1.ResId))
+                                                                            {
+
+
+                                                                                <li>
+                                                                                    <input data-type="0" type="checkbox" checked="@p2.Status" id="chk_@p2.RpermiId" data-resprmiid="@p2.RpermiId" onchange="UpdateStatus('chk_@p2.RpermiId', 'rolePrmiWithResourcePrmi');" />
+                                                                                    <div class="divPermissionBorderStyle">
+                                                                                        <input id='inpt_@p2.RpermiId' type="text" disabled="disabled" class="inptTxt" placeholder="@p2.Name" value="@p2.DisplayName" />
+
+                                                                                        @if (p2.IsReport)
+                                                                                        {
+                                                                                            <input type="checkbox" checked="@p2.AddPermi" id="chkAdd_@p2.RolePrmId" data-type="add" data-roleprmiid="@p2.RolePrmId"
+                                                                                                   onchange="UpdateStatus('chkAdd_@p2.RolePrmId', 'inputprmi');" />
+                                                                                            <span>
+                                                                                                @HttpContext.GetGlobalResourceObject("Local", "Preview")
+                                                                                            </span>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <input type="checkbox" checked="@p2.AddPermi" id="chkAdd_@p2.RolePrmId" data-type="add" data-roleprmiid="@p2.RolePrmId" onchange="UpdateStatus('chkAdd_@p2.RolePrmId', 'inputprmi');" />
+                                                                                            <span>@HttpContext.GetGlobalResourceObject("Local", "Add")</span>
+                                                                                            <input type="checkbox" checked="@p2.EditPermi" id="chkEdit_@p2.RolePrmId" data-type="edit" data-roleprmiid="@p2.RolePrmId" onchange="UpdateStatus('chkEdit_@p2.RolePrmId', 'inputprmi');" />
+                                                                                            <span>@HttpContext.GetGlobalResourceObject("Local", "Edit")</span>
+                                                                                            <input type="checkbox" checked="@p2.DeletePermi" id="chkDelete_@p2.RolePrmId" data-type="delete" data-roleprmiid="@p2.RolePrmId" onchange="UpdateStatus('chkDelete_@p2.RolePrmId', 'inputprmi');" />
+                                                                                            <span>@HttpContext.GetGlobalResourceObject("Local", "Delete")</span>
+                                                                                        }
+
+                                                                                        <span title=@HttpContext.GetGlobalResourceObject("Local", "click for edit") id='edit_@p2.RpermiId' class="fas fa-edit editIcon" onclick="EditSpan('inpt_@p2.RpermiId', 'save_@p2.RpermiId', 'edit_@p2.RpermiId');"></span>
+                                                                                        <span title=@HttpContext.GetGlobalResourceObject("Local",  "click to save")
+                                                                                              id='save_@p2.RpermiId' class="fas fa-check saveIcon" style="display: none;"
+                                                                                              onclick="SaveSpan('inpt_@p2.RpermiId', 'save_@p2.RpermiId', 'edit_@p2.RpermiId', @p2.RpermiId);"></span>
+                                                                                    </div>
+
+                                                                                </li>
+                                                                            }
+                                                                        </ul>
+
+                                                                    </li>
+                                                                }
+                                                            </ul>
+
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

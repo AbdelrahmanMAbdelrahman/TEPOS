@@ -1,0 +1,205 @@
+﻿@{
+    ViewBag.Title = "Shift";
+}
+@model ERP.Controllers.POS.VmShift
+
+<link href="~/Content/Custom/Pos/Setings/Customer.css" rel="stylesheet" />
+<script src="~/Scripts/Custom/Pos/Settings/Shift.js"></script>
+<script src="~/Scripts/Custom/Pos/Pos/ShiftPrintJS.js"></script>
+
+<div class="page-inner mt-3">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <button class="btn btn-success btn-sm px-4 py-2 mr-3" id="btnOpenShift">
+                            <i class="fa fa-play-circle mr-2"></i>
+                            @HttpContext.GetGlobalResourceObject("Local", "Open Shift")
+                        </button>
+                        <button class="btn btn-danger btn-sm px-4 py-2" id="btnCloseShift">
+                            <i class="fa fa-stop-circle mr-2"></i>
+                            @HttpContext.GetGlobalResourceObject("Local", "Close Shift")
+                        </button>
+                    </div>
+                    <div>
+                        <strong>
+                            @HttpContext.GetGlobalResourceObject("Local", "Shift Code"):
+                        </strong> <span id="txtShiftCode" class="ml-2"></span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "ShiftForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="StartTime">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Start Time")
+                                    </label>
+                                    @Html.TextBox("PosShift.StartTime", "", new
+                                    {
+                                        @id = "StartTime",
+                                   @class = "form-control",
+                                        @readonly = "readonly"
+                                    })
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="ClosingBallanceCash">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Closing Balance Cash")
+                                    </label>
+                                    @Html.TextBox("PosShift.ClosingBallanceCash", "", new
+                                    {
+                                        @id = "ClosingBallanceCash",
+                                   @class = "form-control"
+                                    })
+                                </div>
+                                <div class="form-group">
+                                    <label for="ClosingBallanceVisa">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Closing Balance Visa")
+                                    </label>
+                                    @Html.TextBox("PosShift.ClosingBallanceVisa", "", new
+                                    {
+                                        @id = "ClosingBallanceVisa",
+                                   @class = "form-control"
+                                    })
+                                </div>
+                                <div class="form-group">
+                                    <label for="ClosingBallanceBank">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Closing Balance Bank")
+                                    </label>
+                                    @Html.TextBox("PosShift.ClosingBallanceBank", "", new { @id = "ClosingBallanceBank", @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="Notes">@HttpContext.GetGlobalResourceObject("Local","Notes")</label>
+                                    @Html.TextBox("PosShift.Notes", "", new { @id = "Notes", @class = "form-control" })
+                                </div>
+                                @*<div class="form-group">
+                                        <label for="TotalClosingBallance">Total Closing Balance</label>
+                                        @Html.TextBox("PosShift.TotalClosingBallance", "", new { @id = "TotalClosingBallance", @class = "form-control", @readonly = "readonly" })
+                                    </div>*@
+
+
+
+                            </div>
+
+                            <!-- Right Column -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="EndTime">
+                                        @HttpContext.GetGlobalResourceObject("Local", "End Time")
+                                    </label>
+                                    @Html.TextBox("PosShift.EndTime", "", new
+                                    {
+                                        @id = "EndTime",
+                                        @class = "form-control",
+                                   @readonly = "readonly"
+                                    })
+                                </div>
+                                <div class="form-group">
+                                    <label for="RemainingCash">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Remaining Cash")
+                                    </label>
+                                    @Html.TextBox("PosShift.RemainingCash", "", new { @id = "RemainingCash", @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="CacheIn">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Cache In")
+                                    </label>
+                                    @Html.TextBox("PosShift.CacheIn", "", new { @id = "CacheIn", @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="CacheOut">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Cache Out")
+                                    </label>
+                                    @Html.TextBox("PosShift.CacheOut", "", new { @id = "CacheOut", @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="closingComments">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Closing Comments")
+                                    </label>
+                                    @Html.TextBox("PosShift.closingComments", "", new { @id = "closingComments", @class = "form-control" })
+                                </div>
+
+                                @*<div class="form-group">
+                                        <label for="diffBallance">Difference Balance</label>
+                                        @Html.TextBox("PosShift.diffBallance", "", new { @id = "diffBallance", @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="diffSalesCash">Difference Sales Cash</label>
+                                        @Html.TextBox("PosShift.diffSalesCash", "", new { @id = "diffSalesCash", @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="diffSalesVisa">Difference Sales Visa</label>
+                                        @Html.TextBox("PosShift.diffSalesVisa", "", new { @id = "diffSalesVisa", @class = "form-control", @readonly = "readonly" })
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="diffSalesBank">Difference Sales Bank</label>
+                                        @Html.TextBox("PosShift.diffSalesBank", "", new { @id = "diffSalesBank", @class = "form-control", @readonly = "readonly" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="TotalDifference">Total Difference</label>
+                                        @Html.TextBox("PosShift.TotalDifference", "", new { @id = "TotalDifference", @class = "form-control", @readonly = "readonly" })
+                                    </div>*@
+
+
+
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="ShiftDuration">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Shift Duration")
+                                    </label>
+                                    @Html.TextBox("PosShift.ShiftDuration", "", new
+                                    {
+                                        @id = "ShiftDuration",
+                                   @class = "form-control",
+                                        @readonly = "readonly"
+                                    })
+                                </div>
+                                <div class="form-group">
+                                    <label for="OpeningBallance">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Opening Balance")
+                                    </label>
+                                    @Html.TextBox("PosShift.Opening Ballance", "", new { @id = "OpeningBallance", @class = "form-control", @readonly = "readonly" })
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="CacheInDescription">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Cache In Description")
+                                    </label>
+                                    @Html.TextBox("PosShift.CacheInDescription", "", new { @id = "CacheInDescription", @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="CacheOutDescription">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Cache Out Description")
+                                    </label>
+                                    @Html.TextBox("PosShift.CacheOutDescription", "", new
+                                    {
+                                        @id = "CacheOutDescription",
+                                   @class = "form-control"
+                                    })
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+

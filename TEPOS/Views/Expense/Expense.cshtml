@@ -1,0 +1,120 @@
+@{
+    ViewBag.Title = "Expense Entry Form";
+}
+@model ERP.Models.PosExpenses
+
+<!-- DataTables Export Dependencies -->
+<link href="~/Content/DataTables/css/buttons.dataTables.min.css" rel="stylesheet" />
+<script src="~/Scripts/DataTables/dataTables.buttons.min.js"></script>
+<script src="~/Scripts/DataTables/buttons.html5.min.js"></script>
+<script src="~/Scripts/DataTables/buttons.print.min.js"></script>
+<script src="~/Scripts/DataTables/jszip.min.js"></script>
+<script src="~/Scripts/DataTables/pdfmake.min.js"></script>
+<script src="~/Scripts/DataTables/vfs_fonts.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="~/Scripts/Custom/Expense/Expense.js"></script>
+
+<div class="page-inner margin-top-15px">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="main-card card">
+                <div class="card-header text-center">
+                    <h4 class="card-title">@HttpContext.GetGlobalResourceObject("Local", "Expense Details")</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-horizontal">
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "expenseForm" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+
+                            <!-- Expense Type -->
+                            <div class="form-group">
+                                <label for="expenseType" class="control-label">
+                                    @HttpContext.GetGlobalResourceObject("Local", "Expense Type")
+                                <span class="text-danger">*</span>
+                            </label>
+                            @Html.DropDownListFor(m => m.ExpenseType, new SelectList(new[]
+                       {@HttpContext.GetGlobalResourceObject("Local","Salary"),
+                           @HttpContext.GetGlobalResourceObject("Local","Rent"),
+                           @HttpContext.GetGlobalResourceObject("Local","Electricity"),
+                           @HttpContext.GetGlobalResourceObject("Local","Water"),
+                           @HttpContext.GetGlobalResourceObject("Local","Other") }),
+                                new { @id = "expenseType", @class = "form-control", @required = "required" })
+                            <span class="text-danger">@Html.ValidationMessageFor(m => m.ExpenseType)</span>
+                        </div>
+
+                        <!-- Amount -->
+                        <div class="form-group">
+                            <label for="Amount" class="control-label">@HttpContext.GetGlobalResourceObject("Local", "Amount") <span class="text-danger">*</span></label>
+                            @Html.TextBoxFor(m => m.Amount, new
+                            {
+                                @id = "Amount",
+                                @class = "form-control",
+                           @placeholder = @HttpContext.GetGlobalResourceObject("Local", "Enter Amount"),
+                                @required = "required",
+                           @type = "number",
+                                @min = "0",
+                                @step = "0.01"
+                            })
+                            <span class="text-danger">@Html.ValidationMessageFor(m => m.Amount)</span>
+                        </div>
+
+                        <!-- Date -->
+                        <div class="form-group">
+                            <label for="Date" class="control-label">@HttpContext.GetGlobalResourceObject("Local", "Date") <span class="text-danger">*</span></label>
+                            @Html.TextBoxFor(m => m.Date, new { @id = "Date", @class = "form-control", @type = "date", @required = "required" })
+                            <span class="text-danger">@Html.ValidationMessageFor(m => m.Date)</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Branch" class="control-label">@HttpContext.GetGlobalResourceObject("Local", "Branch")<span class="required">*</span></label>
+                            @Html.DropDownListFor(m => m.PosBranchId, new SelectList("", ""), new { @id = "PosBranchId", @class = "form-control input-full" })
+                            <span class="clsValidate">@Html.ValidationMessageFor(m => m.PosBranchId) </span>
+
+
+                        </div>
+                        <!-- Notes -->
+                        <div class="form-group">
+                            <label for="Notes" class="control-label">@HttpContext.GetGlobalResourceObject("Local", "Notes")</label>
+                            @Html.TextAreaFor(m => m.Notes, new { @id = "Notes", @class = "form-control", @placeholder = @HttpContext.GetGlobalResourceObject("Local", "EnterAnyNotes"), @rows = "3" })
+                            <span class="text-danger">@Html.ValidationMessageFor(m => m.Notes)</span>
+                        </div>
+
+                        <div class="form-group text-right">
+                            <input type="button" id="btnSave" class="btn btn-success" value=@HttpContext.GetGlobalResourceObject("Local", "Save") />
+                            <input type="button" id="btnEdit" class="btn btn-warning" value=@HttpContext.GetGlobalResourceObject("Local","Edit") style="display:none;" />
+                            <input type="button" id="btnClear" class="btn btn-primary" value=@HttpContext.GetGlobalResourceObject("Local", "Clear") />
+                        </div>
+                    }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="main-card card">
+                <div class="card-header text-center">
+                    <h4 class="card-title">@HttpContext.GetGlobalResourceObject("Local", "Expense List")</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="expenseTable" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>@HttpContext.GetGlobalResourceObject("Local", "Type")</th>
+                                    <th>@HttpContext.GetGlobalResourceObject("Local", "Amount")</th>
+                                    <th>@HttpContext.GetGlobalResourceObject("Local", "Date")</th>
+                                    <th>@HttpContext.GetGlobalResourceObject("Local", "Notes")</th>
+                                    <th>@HttpContext.GetGlobalResourceObject("Local", "Branch")</th>
+                                    <th>@HttpContext.GetGlobalResourceObject("Local", "Action")</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

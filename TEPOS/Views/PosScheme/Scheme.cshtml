@@ -1,0 +1,257 @@
+﻿@{
+    ViewBag.Title = "Scheme";
+}
+
+<link href="~/Content/Custom/Pos/Setings/Scheme.css" rel="stylesheet" />
+<link href="~/Content/base.css" rel="stylesheet" />
+<script src="~/Scripts/Custom/Pos/Scheme/Scheme.js"></script>
+<div class="page-inner margin-top-15px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">
+                            <i class="fas fa-user"></i>
+                            @HttpContext.GetGlobalResourceObject("Local", "Scheme/Discount Setting")
+                        </h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6 form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-md-4 itemLbl">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Scheme Code")
+                                        </label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="schemeCode" class="form-control input-sm txtbox97" placeholder=@HttpContext.GetGlobalResourceObject("Local", "Will filled up by system") readonly />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 itemLbl">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Description")
+                                        </label>H
+                                        <div class="col-md-8">
+                                            <input type="text" id="description" class="form-control input-sm txtbox97" placeholder=@HttpContext.GetGlobalResourceObject("Local", "Description" ) required />
+                                            <span class="required">*</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 itemLbl">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Combination")
+                                        </label>
+                                        <div class="col-md-8">
+                                            <select id="completaion" class="form-control input-sm txtbox97">
+                                                <option value="False">
+                                                    @HttpContext.GetGlobalResourceObject("Local", "No")
+                                                </option>
+                                                <option value="True">
+                                                    @HttpContext.GetGlobalResourceObject("Local", "Yes")
+                                                </option>
+                                            </select>
+                                            <span class="required">*</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 itemLbl">
+                                            Scheme Type
+                                        </label>
+                                        <div class="col-md-8">
+                                            <select id="schemeType" class="form-control input-sm txtbox97">
+                                                <option value="1">
+                                                    @HttpContext.GetGlobalResourceObject("Local", "Quantity")
+                                                </option>
+                                                <option value="2">
+                                                    @HttpContext.GetGlobalResourceObject("Local", "Amount")
+                                                </option>
+                                            </select>
+                                            <span class="required">*</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-md-4 itemLbl">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Valid From")
+                                        </label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="validFrom" class="form-control input-sm txtbox97 datePicker" placeholder=@HttpContext.GetGlobalResourceObject("Local", "Valide From") required />
+                                            <span class="required">*</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4  itemLbl">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Valid To")
+                                        </label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="validTo" class="form-control txtbox97 input-sm datePicker" placeholder=@HttpContext.GetGlobalResourceObject("Local","Valide To") required />
+                                            <span class="required">*</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 itemLbl">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Status")
+                                        </label>
+                                        <div class="col-md-8">
+                                            <select id="status" class="form-control txtbox97 input-sm">
+                                                <option value="True">
+                                                    @HttpContext.GetGlobalResourceObject("Local", "Enable")
+                                                </option>
+                                                <option value="False">
+                                                    @HttpContext.GetGlobalResourceObject("Local", "Disable")
+                                                </option>
+                                            </select>
+                                            <span class="required">*</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <hr />
+                                <div class="col-md-4 form">
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label itemLbl">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Branch")
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-12">
+                                            <select id="posBranch" class="form-control chosen" multiple></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form">
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label itemLbl">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Customer Class")
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-12">
+                                            <select id="cusClass" class="form-control chosen" multiple></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form">
+                                    <div class="form-group">
+                                        <label class="col-md-12 control-label itemLbl">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Product")
+                                            <span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-12" id="productDiv">
+                                            <div class="row productDiv">
+                                                <div class="col-md-10">
+                                                    <div class="w50 flL">
+                                                        <select class="form-control chosen sPrd prdDD">
+                                                            <option value="">
+                                                                @HttpContext.GetGlobalResourceObject("Local", "Select Product")
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="w50 flL">
+                                                        <select name="schemeType" class="form-control chosen sPrdB prdDDB">
+                                                            <option value="">
+                                                                @HttpContext.GetGlobalResourceObject("Local", "Batch/Size")
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2" style="padding: 0">
+                                                    <span class="text-success glyphicon glyphicon-plus cp productDivA"></span>
+                                                    <span class="text-danger glyphicon glyphicon-minus cp productDivR"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <hr />
+                                <div class="col-md-12">
+                                    <table class="table table-condensed table-bordered" id="tblScmFreeIni">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <span class="required">*</span> <span id="schemeTypeL">
+                                                        ‌@HttpContext.GetGlobalResourceObject("Local", "Quantity")
+                                                    </span>
+                                                </th>
+                                                <th>@HttpContext.GetGlobalResourceObject("Local", "Discount")</th>
+                                                <th>@HttpContext.GetGlobalResourceObject("Local", "Flat Amt")</th>
+                                                <th>@HttpContext.GetGlobalResourceObject("Local", "Free Product")</th>
+                                                <th>@HttpContext.GetGlobalResourceObject("Local", "OPT")</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="slabQA">
+                                            <tr>
+                                                <td>
+                                                    <input type="number" class="form-control input-sm PurQtyOrAmt schemeTypeI" placeholder=@HttpContext.GetGlobalResourceObject("Local","Quantity") value="0" required />
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control input-sm Discount" placeholder=@HttpContext.GetGlobalResourceObject("Local",  "Discount") value="0" />
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control input-sm FlatAmt" placeholder=@HttpContext.GetGlobalResourceObject("Local", "Flat Amoumt") value="0" />
+                                                </td>
+                                                <td>
+                                                    <span class="badge slabQAPrdCount" data-item="">0</span>
+                                                    <span class="label label-primary cp slabQAPrd">
+                                                        @HttpContext.GetGlobalResourceObject("Local", "Product") + -
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="text-success far fa-plus-square cp slabQAPrdA"></span>
+                                                    <span class="text-danger ml-3 far fa-minus-square cp slabQAPrdR"></span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 offset-9">
+                                    <div class="pull-right" style="margin-top: 5px;">
+                                        <input type="button" id="btnSave" class="btn btn-success btn-sm btn-fixedWidth" value=@HttpContext.GetGlobalResourceObject("Local","Save Changes") />
+                                        <input type="button" id="btnEdit" class="btn btn-warning btn-sm btn-fixedWidth" value=@HttpContext.GetGlobalResourceObject("Local", "Update") />
+                                        <input type="button" id="btnClear" class="btn btn-primary btn-sm btn-fixedWidth" value=@HttpContext.GetGlobalResourceObject("Local", "Clear") />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mt-5">
+                            <hr />
+                            <table id="dTable" class="table table-bordered w100"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="modal fade" id="slabQAPrdModal" data-row-index="0" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    @HttpContext.GetGlobalResourceObject("Local", "Free Product")
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="slabQAPrdModalBody">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
+                    @HttpContext.GetGlobalResourceObject("Local", "Close")
+                </button>
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal" onclick="calFreeItem();">
+                    @HttpContext.GetGlobalResourceObject("Local", "Add Free Item")
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

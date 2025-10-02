@@ -1,0 +1,24 @@
+﻿@media screen and (min-width:769px) {
+    .tab-pane {
+        min-height: 280px;
+    }
+}
+   .itemLbl {
+       font-size: 12px !important;
+       padding-right: 5px !important;
+   }
+
+   .tab-pane {
+       border-bottom: 1px solid #dfdfdf;
+        border-left: 1px solid #dfdfdf;
+        border-right: 1px solid #dfdfdf;
+        padding: 0 5px 20px;
+   }
+#Product_PosSupplierId_chosen,#Product_PosUomGroupId_chosen {
+    width: 96% !important;
+    height: 26px !important;
+}
+
+#dTableItemBatch {
+
+}

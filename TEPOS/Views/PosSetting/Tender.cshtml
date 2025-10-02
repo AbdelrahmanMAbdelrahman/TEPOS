@@ -1,0 +1,152 @@
+﻿
+@{
+    ViewBag.Title = "Tender";
+}
+@model ERP.Models.VModel.VmTender
+
+<script src="~/Scripts/Custom/Pos/Settings/Tender.js"></script>
+
+<div class="page-inner margin-top-15px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">
+                            @HttpContext.GetGlobalResourceObject("Local", "Payment Method Setup")
+                        </h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "tenderForm", @class = "form-horizontal" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true)
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-4 itemLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Payment Type")
+                                    </label>
+                                    <div class="col-md-8">
+                                        <div class="txtbox97 input-group">
+                                            @Html.DropDownListFor(m => m.PosTender.PosTenderTypeId, new SelectList("", ""),
+                                           new { @id = "PosTenderTypeId", @class = "form-control" })
+                                            <div class="input-group-addon no-print plusIcon p-1">
+                                                <i class="fa fa-plus-circle" id="addTenderType" title=@HttpContext.GetGlobalResourceObject("Local","Add new tender type")></i>
+                                                <i class="fas fa-edit cusrorP" style="margin-left: 5px;" id="editTenderType"
+                                                   title=@HttpContext.GetGlobalResourceObject("Local", "Update Tender Type")></i>
+                                            </div>
+                                        </div>
+                                        <span class="required">*</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-4 itemLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Payment method")
+                                    </label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(m => m.PosTender.Name, new
+                                        {
+                                            @id = "Name",
+                                            @class = "form-control txtbox97",
+                                       @placeholder = "Name (ex-Paypal)"
+                                        })
+                                        <span class="required">*</span>
+                                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.PosTender.Name) </span>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-4 itemLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Order")
+                                    </label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(m => m.PosTender.Order, new
+                                        {
+                                            @id = "Order",
+                                            @class = "form-control txtbox97",
+                                       @placeholder = HttpContext.GetGlobalResourceObject("Local", "Order")
+                                        })
+                                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.PosTender.Order) </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-4 itemLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Type")
+                                    </label>
+                                    <div class="col-md-8">
+                                        @Html.DropDownListFor(m => m.PosTender.Type, new List<SelectListItem>
+                                        {
+                                            new SelectListItem() {Text = @"Default", Value = "NA"},
+                                            new SelectListItem() {Text = @"For Discount", Value = "DI"}
+                                        }, new { @class = "form-control txtbox97" })
+                                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.PosTender.Type) </span>
+                                    </div>
+                                </div>
+
+                            }
+
+                            <div class="form-group form-inline control-group">
+                                <div class="col-md-10 offset-2">
+                                    <div class="pull-right">
+                                        <input type="button" id="btnSave" class="btn btn-success btn-sm btn-fixedWidth" value=@HttpContext.GetGlobalResourceObject("Local", "Save Changes") />
+                                        <input type="button" id="btnEdit" class="btn btn-warning btn-sm btn-fixedWidth" value=@HttpContext.GetGlobalResourceObject("Local", "Update") />
+                                        <input type="button" id="btnClear" class="btn btn-primary btn-sm btn-fixedWidth" value=@HttpContext.GetGlobalResourceObject("Local","Clear") />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-7">
+                            <table id="dTable" class="table table-bordered w-100"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Tender type *@
+<div class="modal fade" id="frmModalTenderType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    @HttpContext.GetGlobalResourceObject("Local", "Payment Type")
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="col">
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "frmPostTenderType", @class = "form-horizontal" }))
+                    {
+                        <div class="form-group form-inline control-group">
+                            <label class="col-md-3">
+                                @HttpContext.GetGlobalResourceObject("Local", "Payment Type")
+                            </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.PosTenderType.Name, new { @class = "form-control txtbox97" })
+                                <span class="required">*</span>
+                                <span class="clsValidate">@Html.ValidationMessageFor(m => m.PosTenderType.Name) </span>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <input id="btnSaveTenderType" type="submit" value=@HttpContext.GetGlobalResourceObject("Local","Save Changes") class="btn btn-success dN btn-sm" />
+                <input id="btnEditTenderType" type="button" value=@HttpContext.GetGlobalResourceObject("Local", "Update") class="btn btn-warning dN btn-sm" />
+            </div>
+        </div>
+    </div>
+</div>
+@* end tender type *@
+

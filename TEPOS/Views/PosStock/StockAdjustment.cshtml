@@ -1,0 +1,182 @@
+﻿@using ERP.CSharpLib
+@{
+    ViewBag.Title = "Stock Adjustment";
+}
+<link href="~/Content/Custom/Pos/Stock/StockAdjustment.css" rel="stylesheet" />
+<link href="~/Content/lib/search-table-utility.css" rel="stylesheet" />
+<script src="~/Scripts/Custom/Pos/Stock/StockAdjustment.js?@ProjectVersion.Version"></script>
+
+<div class="page-inner margin-top-15px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">
+                            @HttpContext.GetGlobalResourceObject("Local", "Stock Adjustment")
+                        </h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-12 form-horizontal">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-horizontal">
+                                    <div class="form-group form-inline control-group">
+                                        <label class="col-md-5 lblCustom">
+                                            @HttpContext.GetGlobalResourceObject("Local", "CompanyInvNo")<span class="required"> *</span>
+                                        </label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="CompanyInvNo" name="CompanyInvNo" class="form-control input-sm input-full" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-inline control-group">
+                                        <label class="col-md-5 lblCustom">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Inv Date") <span class="required"> *</span>
+                                        </label>
+                                        <div class="col-md-7">
+                                            <input value="@UTCDateTime.BDDate().ToString("MM/dd/yyyy")" type="text" class="form-control input-sm datePicker input-full" placeholder="Invoice Date" id="InvDate" name="InvDate" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-inline control-group">
+                                        <div class="col-md-7 offset-5">
+                                            <input type="checkbox" checked="checked" id="chkSearchEnable" /> <span>
+                                                @HttpContext.GetGlobalResourceObject("Local", "Enable search")
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-horizontal">
+                                    <div class="form-group form-inline control-group dN">
+                                        <label class="col-md-5 lblCustom">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Supplier") <span class="required"> *</span>
+                                        </label>
+                                        <div class="col-md-7">
+                                            <select class="form-control input-sm input-full" id="PosSupplierId" name="PosSupplierId"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-inline control-group">
+                                        <label class="col-md-5 lblCustom">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Branch") <span class="required"> *</span>
+                                        </label>
+                                        <div class="col-md-7">
+                                            <select id="PosBranchId" name="PosBranchId" class="form-control input-sm input-full"></select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-horizontal">
+                                    <div class="form-group form-inline control-group">
+                                        <label class="col-md-5 lblCustom">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Location") <span class="required"> *</span>
+                                        </label>
+                                        <div class="col-md-7">
+                                            <select id="Location" name="Location" class="form-control input-sm input-full"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-inline control-group">
+                                        <label class="col-md-5 lblCustom">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Transaction Type") <span class="required"> *</span>
+                                        </label>
+                                        <div class="col-md-7">
+                                            <select id="tranactionType" name="tranactionType" class="form-control input-sm input-full">
+                                                <option value="4">
+                                                    @HttpContext.GetGlobalResourceObject("Local", "Add Stock")
+                                                </option>
+                                                <option value="5">
+                                                    @HttpContext.GetGlobalResourceObject("Local", "Reduce Stock")
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group form-inline control-group dN">
+                                        <label class="col-md-5  lblCustom">
+                                            @HttpContext.GetGlobalResourceObject("Local", "Net Amount")<span class="required"> *</span>
+                                        </label>
+                                        <div class="col-md-7">
+                                            <input type="number" class="form-control input-sm text-right input-full" placeholder=@HttpContext.GetGlobalResourceObject("local", "Net Amount") id="NetPayable" />
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div id="divSearchOn">
+                            <div id="divSearchOnChild">
+                                <div id="divCloseSearch">
+                                    <i class="fas fa-window-close"></i>
+                                </div>
+                                <div class="w50 float-left">
+                                    <span>
+                                        <input id="txtCodeOrBarcode" type="text" class="form-control input-sm txtItemOrBarcodeACI" placeholder=@HttpContext.GetGlobalResourceObject("Local", "Enter item name or scan barcode") ........... />
+                                    </span>
+                                </div>
+                                <div class="" id="txtItemOrBarcodeAC"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table id="dTableStockAdjustment" class="inlineEditingDataTable table table-bordered w100"></table>
+                            </div>
+                        </div>
+
+
+                        <div class="row mt-2">
+
+                            <div class="col-md-8">
+                                <div class="form-inline control-group">
+                                    <textarea class="form-control input-full" rows="3" id="Inv_Remarks" placeholder=@HttpContext.GetGlobalResourceObject("Local", "Remarks") ..></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-inline control-group">
+                                    <label class="col-md-5  lblCustom">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Total Amount")
+                                    </label>
+                                    <div class="col-md-7 p-0">
+                                        <input type="number" class="form-control input-sm dtInputBackground text-right input-full
+                                               id="Inv_TotalAmount" readonly="readonly" placeholder=@HttpContext.GetGlobalResourceObject("Local", "Total Amount" ) />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-4 offset-8">
+                                <div class="pull-right">
+                                    <input type="button" class="btn btn-sm btn-success btn-sm" value=@HttpContext.GetGlobalResourceObject("Local", "Save") id="btnSave" />
+                                    <input type="button" class="btn btn-sm btn-primary btn-sm" value=@HttpContext.GetGlobalResourceObject("Local", "Refresh") id="btnRefresh" />
+                                    <input type="button" class="btn btn-sm btn-info btn-sm" value=@HttpContext.GetGlobalResourceObject("Local", "Cancel") id="btnCancel" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+

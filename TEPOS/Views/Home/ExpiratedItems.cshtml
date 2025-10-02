@@ -1,0 +1,50 @@
+﻿@model List<ERP.Models.VModel.FullProductDetailsViewModel>
+
+<div class="container">
+    <h1 class="text-center m-3">
+        @HttpContext.GetGlobalResourceObject("Local", "Expirated Items")
+    </h1>
+    <table class="table table-striped table-bordered table-hover" dir="rtl">
+        <thead>
+            <tr>
+                <th>@HttpContext.GetGlobalResourceObject("Local", "Product Name")</th>
+                <th>@HttpContext.GetGlobalResourceObject("Local", "Supplier")</th>
+            
+                <th>@HttpContext.GetGlobalResourceObject("Local", "Product Class")</th>
+                <th>@HttpContext.GetGlobalResourceObject("Local", "Product Category")</th>
+                <th>@HttpContext.GetGlobalResourceObject("Local", "Expirated")</th>
+                <th>@HttpContext.GetGlobalResourceObject("Local", "product Code")</th>
+                
+                <th>@HttpContext.GetGlobalResourceObject("Local", "Branch")</th>
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var prod in Model)
+            {
+                <tr>
+                    <td>@(prod.ProductName??"No Name")</td>
+                    <td>@(prod.SupplierName != null ? prod.SupplierName : "No Name")</td>
+                   
+
+
+
+                    <td>@(prod.ProductClass??"No Class")</td>
+                    <td>@(prod.Category??"No Category")</td>
+                    <td>@(prod.Expirated)</td>
+
+                    <td>@(prod.Code??"No Code")</td>
+                     
+                    <td>@(prod.Branch??"No Branch")</td>
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+        <p>@HttpContext.GetGlobalResourceObject("Local","Records") : @Model.Count </p>
+</div>
+

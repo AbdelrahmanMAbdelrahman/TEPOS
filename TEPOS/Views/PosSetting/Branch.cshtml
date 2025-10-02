@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "Branch";
+}
+
+@model ERP.Models.POS.PosBranch
+<script src="~/Scripts/Custom/Pos/Settings/Branch.js"></script>
+
+<div class="page-inner margin-top-15px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">
+                            @HttpContext.GetGlobalResourceObject("Local", "Branch Info")
+                        </h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "branchForm", @class = "form-horizontal" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true)
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-4 itemLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Name")
+                                    </label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(m => m.Name, new
+                                        {
+                                            @class = "form-control txtbox97",
+                                            @placeholder =
+                                     HttpContext.GetGlobalResourceObject("Local", "Branch Name")
+                                        })
+                                        <span class="required">*</span>
+                                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.Name) </span>
+                                    </div>
+                                </div>
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-4 itemLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Address")
+                                    </label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(m => m.Address, new
+                                        {
+                                            @class = "form-control txtbox97",
+                                            @placeholder =
+                                       @HttpContext.GetGlobalResourceObject("Local", "Address")
+                                        })
+                                        <span class="required">*</span>
+                                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.Address) </span>
+                                    </div>
+                                </div>
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-4 itemLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Phone No")
+                                    </label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(m => m.Phone, new
+                                        {
+                                            @class = "form-control txtbox97",
+                                            @placeholder =
+                                      @HttpContext.GetGlobalResourceObject("Local", "Phone No")
+                                        })
+                                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.Phone) </span>
+                                    </div>
+                                </div>
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-4 itemLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Mobile")
+                                    </label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(m => m.Mobile, new
+                                        {
+                                            @class = "form-control txtbox97",
+                                            @placeholder =
+                                      @HttpContext.GetGlobalResourceObject("Local", "Mobile")
+                                        })
+                                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.Mobile) </span>
+                                    </div>
+                                </div>
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-4 itemLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Email")
+                                    </label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(m => m.Email, new
+                                        {
+                                            @class = "form-control txtbox97",
+                                            @placeholder =
+                                      HttpContext.GetGlobalResourceObject("Local", "Email")
+                                        })
+                                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.Email) </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-4 itemLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Fax")
+                                    </label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(m => m.Fax, new
+                                        {
+                                            @class = "form-control txtbox97",
+                                            @placeholder =
+                                       @HttpContext.GetGlobalResourceObject("Local", "Fax")
+                                        })
+                                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.Fax) </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group form-inline control-group">
+                                    <label class="col-md-4 itemLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Remarks")
+                                    </label>
+                                    <div class="col-md-8">
+                                        @Html.TextBoxFor(m => m.Remarks, new
+                                        {
+                                            @class = "form-control txtbox97",
+                                            @placeholder =
+                                     HttpContext.GetGlobalResourceObject("Local", "Remarks")
+                                        })
+                                        <span class="clsValidate">@Html.ValidationMessageFor(m => m.Remarks) </span>
+                                    </div>
+                                </div>
+                            }
+                            <div class="form-group form-inline control-group">
+                                <div class="col-md-10 offset-2">
+                                    <div class="pull-right">
+                                        <input type="button" id="btnSave" class="btn btn-success btn-sm btn-sm" value=@HttpContext.GetGlobalResourceObject("Local",  "Save Changes") />
+                                        <input type="button" id="btnEdit" class="btn btn-warning btn-sm btn-sm" value=@HttpContext.GetGlobalResourceObject("Local",  "Update") />
+                                        <input type="button" id="btnClear" class="btn btn-primary btn-sm btn-sm" value=@HttpContext.GetGlobalResourceObject("Local",  "Clear") />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-7">
+                            <div class="col">
+                                <table id="dTable" class="table table-bordered w850p"></table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

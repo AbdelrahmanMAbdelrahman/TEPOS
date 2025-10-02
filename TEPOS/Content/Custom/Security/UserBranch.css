@@ -1,0 +1,22 @@
+﻿.TaxInput {
+    float: left;
+    width: 95%;
+}
+
+.dt-center {
+    text-align: center;
+}
+
+.spnDataTableEdit {
+    font-weight: bold;
+    color: #0083bd;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.spnDataTableDelete {
+    font-weight: bold;
+    color: red;
+    margin-left: 10px;
+    cursor: pointer;
+}

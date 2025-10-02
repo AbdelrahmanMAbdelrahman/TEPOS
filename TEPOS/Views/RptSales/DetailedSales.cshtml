@@ -1,0 +1,170 @@
+﻿@using ERP.CSharpLib
+@using ERP.Controllers.Manager
+@{
+    ViewBag.Title = "Detailed Sales";
+    var invoiceTypes = Enum.GetValues(typeof(PosInvoiceType))
+                          .Cast<PosInvoiceType>()
+                          .Select(e => new SelectListItem
+                          {
+                              Text = e.ToString(),  // Enum name (e.g., "Active")
+                              Value = ((int)e).ToString()  // Enum value as string (e.g., "1")
+                          })
+                          .ToList();
+    invoiceTypes.Insert(0, new SelectListItem
+    {
+        Text = "All",
+        Value = "0"
+    });
+}
+<link href="~/Content/Custom/Report/DetailedSales.css" rel="stylesheet" />
+<script src="~/Scripts/Custom/Report/Sales/DetailedSales.js"></script>
+
+
+<div class="page-inner w100">
+    <div class="row">
+        <div class="col-md-6 offset-2 text-right text-center">
+            <div class="main-card card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="card-title">
+                            @HttpContext.GetGlobalResourceObject("Local", "Detailed Sales")
+                        </h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-12 form-horizontal">
+                        <div class="form-group form-inline control-group">
+                            <label class="col-md-3">
+                                @HttpContext.GetGlobalResourceObject("Local", "Date From")
+                            </label>
+                            <div class="col-md-8">
+                                <input type="text" id="dateFrom" autocomplete="off"
+                                       class="form-control txtbox97" placeholder="MM/DD/YYYY" value="@UTCDateTime.BDDate().ToString("MM/dd/yyyy")" />
+                                <span class="required">*</span>
+                            </div>
+                        </div>
+                        <div class="form-group form-inline control-group">
+                            <label class="col-md-3">
+                                @HttpContext.GetGlobalResourceObject("Local", "Date To")
+                            </label>
+                            <div class="col-md-8">
+                                <input type="text" id="dateTo" autocomplete="off" class="form-control txtbox97" placeholder="MM/DD/YYYY" value="@UTCDateTime.BDDate().ToString("MM/dd/yyyy")" />
+                                <span class="required">*</span>
+                            </div>
+                        </div>
+
+                        <!-- Product Name Text Box -->
+                        <div class="form-group form-inline control-group">
+                            <label class="col-md-3">
+                                @HttpContext.GetGlobalResourceObject("Local", "Product Name")
+                            </label>
+                            <div class="col-md-8">
+                                @Html.TextBox("ProductName", null, new
+                                {
+                                    @class = "form-control input-full",
+                                    @placeholder =
+                              HttpContext.GetGlobalResourceObject("Local", "Enter Product Name")
+                                })
+                            </div>
+                        </div>
+
+                        <div class="form-group form-inline control-group">
+                            <label class="col-md-3">
+                                @HttpContext.GetGlobalResourceObject("Local", "Branch Name")
+                            </label>
+                            <div class="col-md-8">
+                                <select id="cmbBranch" multiple="multiple" class="form-control txtbox97"></select>
+                            </div>
+                        </div>
+                        <div class="form-group form-inline control-group">
+                            <label class="col-md-3">
+                                @HttpContext.GetGlobalResourceObject("Local", "Category")
+                            </label>
+                            <div class="col-md-8">
+                                <select id="cmbProductCategory" class="form-control txtbox97"></select>
+                            </div>
+                        </div>
+                        <div class="form-group form-inline control-group">
+                            <label class="col-md-3">
+                                @HttpContext.GetGlobalResourceObject("Local", "Invoice Type")
+                            </label>
+                            <div class="col-md-8">
+                                @Html.DropDownList("PosInvoiceType", new SelectList(invoiceTypes, "Value", "Text"),
+                               new { @class = "form-control input-full" })
+                            </div>
+                        </div>
+                        <div class="form-group form-inline control-group">
+                            <label class="col-md-3">
+                                @HttpContext.GetGlobalResourceObject("Local", "Invoice No")
+                            </label>
+                            <div class="col-md-8">
+                                <input type="text" id="invoiceNo" class="form-control txtbox97" />
+                            </div>
+                        </div>
+
+                        <div class="form-group form-inline control-group">
+                            <div class="offset-3 col-md-8">
+                                <label class="containerChkbox">
+                                    <input type="checkbox" id="ckbIsRelatedAllInvoice">
+                                    <label class="checkmarkChkbox" for="ckbIsRelatedAllInvoice"></label>
+                                    <span class="checkboxLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "View Related Invoice")
+                                    </span>
+                                </label>
+
+
+                            </div>
+                        </div>
+                        <div class="form-group form-inline control-group">
+                            <div class="offset-3 col-md-8">
+                                <label class="containerChkbox">
+                                    <input type="checkbox" id="ckbIsInsite" checked="checked">
+                                    <label class="checkmarkChkbox" for="ckbIsInsite"></label>
+                                    <span class="checkboxLbl">@HttpContext.GetGlobalResourceObject("Local", "Walkin")</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group form-inline control-group">
+                            <div class="offset-3 col-md-8">
+                                <label class="containerChkbox">
+                                    <input type="checkbox" id="ckbIsDelivery" checked="checked">
+                                    <label class="checkmarkChkbox" for="ckbIsDelivery"></label>
+                                    <span class="checkboxLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Delivery")
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group form-inline control-group">
+                            <div class="offset-3 col-md-8">
+                                <label class="containerChkbox">
+                                    <input type="checkbox" id="ckbIsCallCenter" checked="checked">
+                                    <label class="checkmarkChkbox" for="ckbIsCallCenter"></label>
+                                    <span class="checkboxLbl">
+                                        @HttpContext.GetGlobalResourceObject("Local", "Call Center")
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group form-inline control-group">
+                            <div class="col-md-8 offset-3 optButton">
+                                <div align="center" class="btn-group w100">
+                                    <button id="btnClear" type="button" class="btn btn-primary w-45">
+                                        <i class="fas fa-eraser"></i>
+                                        @HttpContext.GetGlobalResourceObject("Local", "Clear")
+                                    </button>
+                                    <button id="btnPreview" type="button" value="Preview"
+                                            class="btn btn-success w-55">
+                                        <i class="fas fa-eye"></i>
+                                        @HttpContext.GetGlobalResourceObject("Local", "Preview")
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

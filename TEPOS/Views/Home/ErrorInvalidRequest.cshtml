@@ -1,0 +1,19 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "Error..........";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <h2 style="margin-top: 15%; text-align: center;">
+        @HttpContext.GetGlobalResourceObject("Local", "Invalid Request")
+    </h2>
+</body>
+</html>
+

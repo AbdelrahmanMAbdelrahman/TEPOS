@@ -1,0 +1,22 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ExecuteSqlCommand</title>
+</head>
+<body>
+
+@using (Html.BeginForm("ExecuteSqlCommandLine", "SoftwareUpdate",FormMethod.Post))
+{
+    <textarea name="commandLine" rows="30" style="width: 100%"></textarea>
+    <br/>
+    <input style="float: right; width: 200px; height: 30px;" type="submit" value="Submit"/>
+}
+    <h3 style="color: red;">@TempData["Message"]</h3>
+</body>
+</html>
