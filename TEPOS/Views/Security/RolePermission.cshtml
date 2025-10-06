@@ -161,8 +161,9 @@
                                                                             <input data-type="0" type="checkbox" checked="@p1.Status" id="chk_@p1.RpermiId"
                                                                                    data-resprmiid="@p1.RpermiId" onchange="UpdateStatus('chk_@p1.RpermiId', 'rolePrmiWithResourcePrmi');" />
                                                                             <div class="divPermissionBorderStyle">
-                                                                                <input id='inpt_@p1.RpermiId' type="text" disabled="disabled" class="inptTxt" placeholder="@HttpContext.GetGlobalResourceObject("Local", p1.Name)"
-                                                                                       value="@HttpContext.GetGlobalResourceObject("Local", p1.DisplayName)" />
+                                                                                <input id='inpt_@p1.RpermiId' type="text" disabled="disabled" class="inptTxt" 
+                                                                                       placeholder="@p1.Name)"
+                                                                                       value="@p1.DisplayName" />
 
                                                                                 @if (p1.IsReport)
                                                                                 {
